@@ -1,0 +1,19 @@
+{{extend 'layout.html'}}
+<h2>{{=profile_id}}</h2>
+<br>
+<div align="center">
+    <table style="width:30%; border: 1px solid black">
+        <tr>
+            {{for hd in result[0]:}}
+                <td>{{=hd.split(':')[-1]}}</td>
+            {{pass}}
+        </tr>
+    {{for r in result[1]:}}
+        <tr>
+            {{for ri in r:}}
+                <td>{{=ri}}</td>
+            {{pass}}
+        </tr>
+    {{pass}}
+    </table>
+</div>

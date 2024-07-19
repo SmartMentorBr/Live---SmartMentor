@@ -1,0 +1,24 @@
+{{extend 'layout.html'}}
+<style>
+#suggestions { position: relative; }
+.suggestions { background: white; border: solid 1px #55A6C8; }
+.suggestions DIV { padding: 2px 4px 2px 4px; }
+</style>
+
+{{=form.custom.begin}}
+{{=T('Company')}}
+{{=form.custom.widget.company}}
+{{=form.custom.submit}}
+<div style="position: absolute;" id="suggestions" class="suggestions"></div>
+{{=form.custom.end}}
+
+<h1>{{=T('Requests made by me')}}</h1>
+<ul>
+{{for my_request in my_requests:}}
+<li><b>{{=T('Company')}}:</b> {{=my_request.company}} <a class="btn btn-mini" href={{=URL('delete', args=['delete_request', my_request.id])}}><i class="icon icon-remove"></i>{{=T('Cancel')}}</a></li>
+{{pass}}
+</ul>
+<script>
+jQuery("#request_company").keyup(function(){
+      ajax('get_company', ['company'], 'suggestions')});
+</script>

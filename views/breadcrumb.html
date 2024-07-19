@@ -1,0 +1,95 @@
+{{ if not request.function in pages_with_menu_and_breadcrumb_disabled: }}
+    {{ if request.args and request.args[0] in args_of_pages_with_breadcrumb_disabled: }}
+        {{''}}
+    {{ else: }}
+        <div class="breadcrumb content-center">
+            <ul>
+                <span class="upper">{{=T('Navigation')}}</span>:
+                <li>
+                    <ul>
+                        <li>
+                            {{ if request.args and request.args[0] == 'profile':}}
+                                <a href="{{=URL(f=request.function, args=[request.args[0]])}}">
+                                    {{=name_pages[request.function]}}
+                                </a>
+                            {{ elif request.function == 'topic':}}
+                                <a href="{{=URL(f='company', vars={'company': company_topic.id})}}">
+                                    {{ =company_topic.name }}
+                                </a>
+                            {{ elif request.function == 'company':}}
+                                <a href="{{=URL(f='companies')}}">
+                                    {{=name_pages[request.function]}}
+                                </a>
+                            {{ else: }}
+                                <a href="{{=URL(request.function)}}">
+                                    {{=name_pages[request.function]}}
+                                </a>
+                            {{ pass }}
+                        </li>
+
+                        {{ if request.function == 'topic':}}
+                            <li>
+                                >
+                                {{ if request.args and request.args[0] == 'profile':}}
+                                    <a href="{{=URL(f=request.function, args=[request.args[0]])}}">
+                                {{ elif request.function == 'company':}}
+                                    <a href="{{=URL(f='companies')}}">
+                                {{ elif request.function == 'topic':}}
+                                    <a href="{{=URL(f='company', vars={'company': company_topic.id})}}">
+                                {{ else: }}
+                                    <a href="{{=URL(request.function)}}">
+                                {{ pass }}
+                                    {{=name_pages[request.function]}}
+                                </a>
+                            </li>
+                        {{ pass }}
+
+                        {{ if request.args and not request.args[0] == 'profile':}}
+                            {{ if request.function == 'topic': }}
+                                {{ if request.args[0] == 'edit': }}
+                                    <li>
+                                        >
+                                        <a href="{{=URL(f=request.function, args=request.args[1])}}">
+                                            {{=topic.title}}
+                                        </a>
+                                    </li>
+                                {{ else: }}
+                                    <li>
+                                        >
+                                        <a href="{{=URL(f=request.function, args=request.args[0])}}">
+                                            {{=topic.title}}
+                                        </a>
+                                    </li>
+                                {{ pass }}
+                            {{ else: }}
+                                <li>
+                                    >
+                                    <a href="{{=URL(f=request.function, args=[request.args[0]])}}">
+                                        {{=name_pages[request.args[0]]}}
+                                    </a>
+                                </li>
+                            {{ pass }}
+                        {{ elif request.vars and request.function == 'company': }}
+                            <li>
+                                >
+                                <a
+                                href="{{=URL(f=request.function,vars={'company': request.vars.company})}}">
+                                    {{=company.name}}
+                                </a>
+                            </li>
+                        {{ pass }}
+                        {{ if request.args and request.function == 'topic' and request.args[0] == 'edit': }}
+                            <li>
+                                >
+                                <a
+                                href="{{=URL(f=request.function, args=[request.args[0], request.args[1]])}}">
+                                    {{=name_pages[request.args[0]]}}
+                                </a>
+                            </li>
+                        {{ pass }}
+                </li>
+            </ul>
+
+        </div>
+    {{ pass }}
+{{ pass }}

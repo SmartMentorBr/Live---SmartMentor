@@ -1,0 +1,485 @@
+{{extend 'layout.html'}}
+
+<!--Informações da Empresa -->
+
+<section class="info-empresa">
+	<nav class="navegacao">
+		<!-- <a href="{{=URL('company', args=['edit', company.id])}}" >{{=T('Edit company')}}</a> -->
+		<a id="edit-company" href="#" data-reveal-id="editar-empresa" data-animation="fade">{{=T('Edit company')}}</a>
+	</nav>
+
+
+	<!-- Modal de edição da Empresa -->
+	<div id="editar-empresa" class="reveal-modal">
+		<div>
+			<span class="pull-right">
+				<a href="javascript:()" onclick="document.getElementsByClassName('reveal-modal-bg')[0].click()">X</a>
+			</span>
+			<h1 class="green bold">{{="Edit company"}}</h1>
+		</div>
+
+		<div class="cont-edit-company">
+
+			<div class="form-avatar avatar-edit-company f-left">
+				<div class="avatar">
+					<img class="avatar" src="{{if company.avatar:}}{{=URL('download', args=company.avatar)}} {{else:}}{{=URL('static','images/imagemdefault.png')}}{{pass}}" alt="{{if company.avatar:}}{{=company.name}}{{else:}}Default{{pass}}">
+					<div class="caption-avatar">{{=T('change photo')}}</div>
+					<input type="hidden" id="edit_company_avatar_change" data-company="{{=company.id}}"></input>
+				</div>
+				<div class="container-upload">
+					<input id="avatar-upload" type="hidden">
+				</div>
+			</div>
+
+
+
+			<section class="info-edit-company f-left">
+				{{=form_company_edit.custom.begin}}
+					<div>
+						<h3>Alterar dados da empresa</h3>
+						{{form_company_edit.custom.widget.name['_class'] = 'input-edit-company input-form-shadow'}}
+                        {{form_company_edit.custom.widget.name['_placeholder'] = T("Company name")}}
+                        {{=form_company_edit.custom.widget.name}}
+
+						{{form_company_edit.custom.widget.site['_class'] = 'input-edit-company input-form-shadow'}}
+                        {{form_company_edit.custom.widget.site['_placeholder'] = T("Company site")}}
+                        {{=form_company_edit.custom.widget.site}}
+
+						{{form_company_edit.custom.widget.description['_class'] = 'textarea-edit-company input-form-shadow'}}
+                        {{form_company_edit.custom.widget.description['_placeholder'] = T('Company description')}}
+                        {{=form_company_edit.custom.widget.description}}
+						<br>
+
+					</div>
+					<hr>
+				<!-- 	<div>
+						<h3>Alterar funções de Membros</h3>
+
+						<section class="membro-info f-left">
+							<figure class="f-left">
+								<img src="#" alt="thumb-membro" class="thumb-membro">
+							</figure>
+							<span><b>Nome da pessoa</b></span>
+							<br>
+							<input type="text" placeholder="Nome da Função"  class="info-funcao-membro">
+						</section>
+
+						<section class="membro-info f-left">
+							<figure class="f-left">
+								<img src="#" alt="thumb-membro" class="thumb-membro">
+							</figure>
+							<span><b>Nome da pessoa</b></span>
+							<br>
+							<input type="text" placeholder="Nome da Função" class="info-funcao-membro">
+						</section>
+
+						<section class="membro-info f-left">
+							<figure class="f-left">
+								<img src="#" alt="thumb-membro" class="thumb-membro">
+							</figure>
+							<span><b>Nome da pessoa</b></span>
+							<br>
+							<input type="text" placeholder="Nome da Função"  class="info-funcao-membro">
+						</section>
+
+						<section class="membro-info f-left">
+							<figure class="f-left">
+								<img src="#" alt="thumb-membro" class="thumb-membro">
+							</figure>
+							<span><b>Nome da pessoa</b></span>
+							<br>
+							<input type="text" placeholder="Nome da Função" class="info-funcao-membro">
+						</section>
+					</div> -->
+
+					<div class="f-right edit-buttons">
+						<input type="reset" onclick="document.getElementsByClassName('reveal-modal-bg')[0].click()" class="form-btn form btn-sucess recusa form-btn-profile" value={{=T('Cancel')}}>
+						{{form_company_edit.custom.submit['_class'] = 'form-btn form btn-success form-btn-profile'}}
+						{{form_company_edit.custom.submit['_value'] = T('Confirm')}}
+						{{form_company_edit.custom.submit['_type'] = 'button'}}
+						{{form_company_edit.custom.submit['_name'] = 'submeterEmpresa'}}
+						
+						{{=form_company_edit.custom.submit}}
+					</div>
+				{{=form_company_edit.custom.end}}
+			</section>
+
+		</div>
+	</div>
+	<!-- Modal de edição da Empresa -->
+
+
+	<!-- Modal editar comentário -->
+	<div id="edit-comment" class="reveal-modal edit-post">
+        <div>
+            <span class="pull-right">
+                <a href="" onclick="document.getElementsByClassName('reveal-modal-bg')[0].click();">X</a>
+            </span>
+            <h1 class="green bold">{{=T('Editing reply')}}</h1>
+            <br>
+        </div>
+        <div class="cont-edit-company">
+
+            {{=form_reply.custom.begin}}
+                {{form_reply.custom.widget.rp_content["_class"] = "edit-post-comentario pull-left"}}
+                {{form_reply.custom.widget.rp_content["_id"] = "contentReply"}}
+
+                {{=form_reply.custom.widget.rp_content}}
+                
+                {{form_reply.elements('#reply_topic')[0]["_type"]="hidden"}}
+                {{=form_reply.custom.widget.topic}}
+
+                <input type="hidden" name="reply_id" value="" id="idPostReply">
+                <input type="submit" id="reply_save_btn" class="btn-success form-btn btn btn-comentar pull-left" value='{{=T("Save Comment")}}'/>
+                <input type="button" class="btn-success form-btn btn btn-comentar recusa pull-left" value="{{=T('Cancel')}}" onclick="document.getElementsByClassName('reveal-modal-bg')[0].click();">
+            {{=form_reply.custom.end}}
+        </div>
+	</div>
+	<!-- MOdal editar comentário -->
+
+
+
+	<section class="miniatura">
+		<figure>
+
+			<!-- <img src="{{=URL('default','download', args=company.avatar)}}" alt="{{=company.name}}"> -->
+			<img src="{{if company.avatar:}}{{=URL('download', args=company.avatar)}} {{else:}}{{=URL('static','images/imagemdefault.png')}}{{pass}}" alt="{{if company.avatar:}}{{=company.name}}{{else:}}Default{{pass}}">
+		</figure>
+	</section>
+	<section class="informacoes">
+
+		<div>
+			<h1 class="titulo">{{=company.name}}</h1>
+		</div>
+		<div>
+		<p data-texto>{{=company.description}}</p>
+		</div>
+		<div>
+            {{if company.site is not None:}}<a href="{{=company.site}}">{{=company.site}}</a>{{pass}}
+		</div>
+	</section>
+
+</section>
+<!--Informações da Empresa -->
+
+<!--Post da Empresa -->
+<section class="post">
+    {{form_topic.custom.begin = XML("<form id=%(_id)s enctype=%(_enctype)s method=%(_method)s>" % form.attributes)}}
+	{{=form_topic.custom.begin}}
+	<section class="cont-form">
+		{{form_topic.elements("#topic_title")[0]['_class']="post-titulo"}}
+		{{form_topic.elements("#topic_title")[0]['_placeholder']=T('Post title')}}
+		{{if topic_to_edit:}}
+			{{form_topic.elements("#topic_title")[0]['_value'] = topic_to_edit.title}}
+		{{pass}}
+
+		{{=form_topic.custom.widget.title}}
+	</section>
+	<section class="cont-form">
+		{{form_topic.elements('#topic_tp_content')[0]['_class']="post-conte"}}		
+		{{form_topic.elements('#topic_tp_content')[0]['_wrap']="on"}}
+		{{form_topic.elements('#topic_tp_content')[0]['_placeholder']=T("What do you wish to report now? You can paste links for websites or external documents (via Dropbox, Google Drive, etc.)")}}
+		{{=form_topic.custom.widget.tp_content}}
+	</section>
+	<section class="cont-form">
+		<div class="categorias">
+			<div class="diretorio-categorias">
+				<div class="categoria-lista">
+					<input type="button" id="categoriaClick" value="{{=T('Select a Category')}}">
+					<section id="lista-c"  style="display:none">
+						<ul>
+							<!-- Lista é gerada por JSON -->
+							<!-- Para adicionar mais categorias é só adicionar li -->
+						</ul>
+
+						<input type="text" id="newCategoria" name="AddCategoria" placeholder="{{=T('new Category')}}">
+
+						<input type="button" id="addCategoria" class="btn-success form-btn addCategoria" value="+"><br>
+
+					
+						<input type="button" class="btn-success form-btn confirma" id="btnConfirmCat" value="{{=T('Confirm')}}">
+
+						<div id="suggestions_cat" class="suggestions"></div>
+						
+					</section>
+				</div>
+			</div>
+
+			<div id="TagsSelect" class="categorias-selecionadas">
+				<!-- Esse espaço vai ser onde vai ficar as tags, depois de selecionadas ( não sei se é pra fazer via JS, ou se vai passar na programação.) -->
+			</div>
+
+		</div>
+
+		<div class="enviar">
+			{{if topic_to_edit:}}
+				<a href="{{=URL('company',vars=dict(company=company.id))}}">
+				<button type="button" class="btn-success btn-cancelar form-btn">
+					{{=T('Cancel')}}
+				</button>
+				</a>
+				<input type="button"  name="edit_topic" value="{{=T('Save')}}" class="btn-success form-btn">
+			{{else:}}
+				<input type="button"  name="edit_topic" value="{{=T('Post')}}" class="btn-success form-btn">
+			{{pass}}
+		</div>
+	</section>
+	{{=form_topic.custom.end}}
+</section>
+
+<!-- Feed De Noticias + Comentários -->
+
+
+<section class="feed pull-left">
+	<div class="titulo">
+		<h1>{{=T('Post in')}}:</h1> <h1 id="categorialAtual">{{=T('All')}}</h1>
+	</div>
+	
+	<!-- Publicação -->
+	<!-- Repetir esse treço para gerar mais postagens -->
+	{{for topic in topics:}}
+	<article class="post-feed">
+		<section class="miniatura">
+			<figure>
+
+				{{if session.linkedin:}}
+				    <img src="{{=topic.created_by.avatar_linkedin}}" title="{{=topic.created_by.first_name}} {{=topic.created_by.last_name}}"/>
+				{{elif topic.created_by.avatar:}}
+					<img src="{{=URL('download', args=topic.created_by.avatar)}}" title="{{=topic.created_by.first_name}} {{=topic.created_by.last_name}}"/>
+				{{else:}}
+					<img src="{{=URL('static','images/imagemdefault.png')}}" title="{{=topic.created_by.first_name}} {{=topic.created_by.last_name}}"/>
+				{{pass}}
+
+
+			</figure>
+		</section>
+		<section class="conteudo pull-left">
+
+			<!--Espaço da Publicacao Principal ! -->
+			<article class="postagem">
+				<!-- Titulo e Editar -->
+				<header class="pull-left">
+					<span class="pull-left nick">
+						<h3 class="azul">
+							{{=topic.title}}
+						</h3>
+						{{=T('By')}}: <span class="azul">{{=topic.created_by.first_name}} {{=topic.created_by.last_name}}</span>
+					</span>
+					<span class="pull-right opcoes">
+						{{if topic.created_by == auth.user.id or owner.id == auth.user.id:}}
+							<a href="{{=URL('company', vars=dict(company=company.id,edit=topic.id))}}">{{=T('Edit')}}</a> | <a href="{{=URL('topic', args=['delete',topic.id])}}">x</a>
+						{{pass}}
+					</span>
+				</header>
+
+				<!-- Conteudo da Postagem -->
+				<section class="pull-left">
+				 <p data-texto>
+					{{=topic.tp_content}}
+				</p>
+				</section>
+				<!-- Espaço para categoria, data, e link da postagem -->
+				<footer class="pull-left">
+					<span>
+						<strong>
+							{{=T('Posted on')}}:
+						</strong>
+					</span>
+					<span class="data">
+						{{=prettydate(topic.created_on)}}
+					</span>
+
+					<span>
+						<strong>
+							{{=T('Modified on')}}:
+						</strong>
+					</span>
+					<span class="data">
+						{{=prettydate(topic.modified_on)}}
+					</span>
+
+					<span>
+						(<a href="{{=URL('topic', args=topic.id)}}">{{=T('Post link')}}</a>)
+					</span>
+					<p>
+						{{if topic.tags != None:}}
+							<span>
+								<strong>{{=T('Categories')}}:</strong>
+								{{for tag in topic.tags:}}
+									<a href="{{=URL('company', vars=dict(company=company.id,tag=tag.tag))}}">{{=tag.tag}}</a>,
+								{{pass}}
+							</span>
+						{{else:}}
+							<span>
+								<strong>{{=T('Without category')}}</strong>
+							</span>
+						{{pass}}
+					</p>
+				</footer>
+			</article>
+			<!--Espaço da Publicacao Principal ! -->
+
+
+			<!-- Espaço dos comentário -->
+			{{for reply in replies:}}
+			{{if reply['reply'].topic == topic.id:}}
+			<section class="comentario pull-left" data-comment="{{=reply['reply'].id}}">
+				<section class="miniatura">
+					<figure>
+
+						{{if session.linkedin:}}
+							<img src="{{=reply['reply'].created_by.avatar_linkedin}}" alt="Thubmail do Usuário">
+						{{elif reply['reply'].created_by.avatar:}}
+							<img src="{{=URL('download', args=reply['reply'].created_by.avatar)}}" alt="Thubmail do Usuário">
+						{{else:}}
+							<img src="{{=URL('static','images/imagemdefault.png')}}" alt="Thubmail do Usuário"}}>
+						{{pass}}
+
+					</figure>
+				</section>
+				<section class="conteudo pull-left">
+					<!-- comentario ! -->
+					<article class="postagem">
+
+						<!-- nome do usuario -->
+						<header class="pull-left">
+							<span class="pull-left nick">
+								<strong>
+									{{=reply['reply'].created_by.first_name}} {{=reply['reply'].created_by.last_name}}
+								</strong>
+							</span>
+							<span class="pull-right opcoes">
+								{{if reply['reply'].created_by.id == auth.user.id or owner.id == auth.user.id:}}
+							<a href="#" data-reveal-id="edit-comment" data-post="{{=reply['reply'].id}}">{{=T('Edit')}}</a> 
+							| <a href="{{=URL('delete_reply', vars=dict(id = reply['reply'].id, company = company.id)) }}">x</a>
+								{{pass}}
+							</span>
+						</header>
+						<!-- Postagem -->
+						<section class="pull-left">
+							<p data-texto>
+								{{=reply['reply'].rp_content}}
+							</p>
+						</section>
+						<!-- Espaço para data -->
+						<footer class="pull-left">
+
+							<span class="data">
+								{{=prettydate(reply['reply'].created_on)}}
+							</span>
+
+						</footer>
+					</article>
+
+					<!-- Inicio da postagem do comentário -->
+				</section>
+			</section>
+			{{pass}}
+			{{pass}}
+			<!-- Espaço dos comentário -->
+
+			<!-- Espaço para postar comentário -->
+			{{=form_reply.custom.begin}}
+			<section class="comentario pull-left">
+				<a href="#" id="reply_rp_content_anchor_{{=str(topic.id)}}"></a>
+				<section class="miniatura">
+					<figure>
+						<img src="{{=get_avatar()}}" alt="Thubmail do Usuário">
+					</figure>
+				</section>
+				<section class="conteudo pull-left">
+					{{form_reply.custom.widget.rp_content["_class"] = "post-comentario"}}
+					{{form_reply.custom.widget.rp_content["_placeholder"] = T("Write a comment")}}
+					{{form_reply.custom.widget.rp_content["_id"] = "reply_rp_content_"+str(topic.id) }}
+					{{=form_reply.custom.widget.rp_content}}
+
+					{{form_reply.elements('#reply_topic')[0]["_type"]="hidden"}}
+					{{form_reply.elements('#reply_topic')[0]["_value"]=topic.id}}
+					{{=form_reply.custom.widget.topic}}
+
+					<input type="hidden" name="reply_id" value="" id="reply_to_edit_id_{{=topic.id}}"></input>
+					<input type="hidden" name="edit_reply" value="False" id="edit_reply_{{=topic.id}}"></input>
+					<input type="submit" id="reply_save_btn" class="btn-success form-btn btn btn-comentar pull-right" value='{{=T("Post Comment")}}'/></input>
+					<a href href="{{=URL('company',vars=dict(company=company.id))}}">
+					<button type="button" class="btn-success form-btn btn btn-cancelar pull-right">{{=T('Cancel')}}</button>
+					
+					</a>
+				</section>
+			</section>
+			{{=form_reply.custom.end}}
+			<!-- Espaço para postar comentário -->
+		</section>
+	</article>
+	<!-- Repetir esse treço para gerar mais postagens -->
+	<!-- Publicação -->
+
+	{{pass}}
+	<hr>
+<!-- 	<section>
+		<input type="button" class="btn-load-feed" value="{{=T('Previous Posts')}}">
+	</section> -->
+</section>
+
+<!-- </section> -->
+<aside class="widgets pull-left">
+
+	<section class="membros pull-left">
+		<section class="thubmail">
+			<h1 class="titulo">{{=T('MEMBERS')}}</h1>
+
+			{{for person in team:}}
+			<figure name="membro">
+				<img title='{{=person["first_name"]}} {{=person['last_name']}}' src={{=get_avatar()}}
+                         data-userid="{{=person['id']}}" alt="{{=person['first_name']}}">
+
+				{{if int(person['id']) == int(company.created_by):}}
+					<span class="status dono" title="{{=person['role']}}"></span>
+				{{elif person['role'] == 'investor':}}
+					<span class="status investidor" title="{{=person['role']}}"></span>
+				{{else:}}
+					<span class="status membro" title="{{=person['role']}}"></span>
+				{{pass}}
+					<span class="delete" id="{{=person['id']}}" name="delete-membro">x</span>
+			</figure>
+			{{pass}}
+
+		</section>
+		{{if owner.id == auth.user.id:}}
+		<div class="right-inner-addon pull-left">
+			<i class="icon-plus"></i>
+			{{=form.custom.begin}}
+		        <div class="right-inner-addon">
+		            <i class="icon-plus"></i>
+					<input id="user_invite" name="user_invite" class="form-text right" type="text" placeholder="{{=T('Search for Members')}}" autocomplete="off"/>
+					<!-- {{=form.custom.widget.user_invite}} -->
+		        </div>
+		    <div id="suggestions" class="suggestions"></div>
+		    {{=form.custom.end}}
+
+		</div>
+		{{pass}}
+	</section>
+	<section class="widget-categoria pull-left">
+		<h1 class="titulo">{{=T('Categories')}}</h1>
+		<ul>
+				{{for tag in tags:}}
+				<li><a href="{{=URL('company', vars=dict(company=company.id,tag=tag.tag))}}">{{=tag.tag}}</a> 
+
+
+				<img src="{{=URL('static','images/notification.png' )}}" data-state="on" name="icoNotification" alt="" class="ico-notification">
+				</li>
+
+				{{pass}}
+		</ul>
+	</section>
+</aside>
+
+
+{{if topic_to_edit:}}
+		<script type="text/javascript">
+			var d = document.getElementById('topic_tp_content');
+			var str = '{{=XML(topic_to_edit.tp_content)}}';
+			d.value = str;
+			// Colocar o ajax para pegar as categorias do post
+		</script>
+{{pass}}

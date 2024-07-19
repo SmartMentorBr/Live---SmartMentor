@@ -1,0 +1,54 @@
+  <script src="{{=URL('static','js/chartjs.js')}}"></script>
+ {{=form.custom.begin}}
+  <div>{{=form.custom.submit}}</div>
+ <table>
+   <tr>
+     <td>x</td>
+     <td>y</td>
+   </tr>
+   <tr>
+     <td> {{=form.custom.widget.x}}</td>
+     <td> {{=form.custom.widget.y}} </td>
+   </tr>
+ </table>
+
+ {{=form.custom.end}}
+
+{{if x is not None and y is not None:}}
+<canvas id="myChart" width="400" height="400"></canvas>
+
+<script type='text/javascript'>
+window.onLoad = function() {
+                    init();
+                };
+function init(){
+  var data = {
+  datasets: [
+    {
+      label: "My First dataset",
+      fillColor: "rgba(220,220,220,0.2)",
+      strokeColor: "rgba(220,220,220,1)",
+      pointColor: "rgba(220,220,220,1)",
+      pointStrokeColor: "#fff",
+      pointHighlightFill: "#fff",
+      pointHighlightStroke: "rgba(220,220,220,1)",
+      data: {{=x}}
+    },
+    {
+        label: "My Second dataset",
+        fillColor: "rgba(151,187,205,0.2)",
+        strokeColor: "rgba(151,187,205,1)",
+        pointColor: "rgba(151,187,205,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(151,187,205,1)",
+        data: {{=y}}
+    }
+  ]
+};
+var ctx = document.getElementById("myChart").getContext("2d");
+var myLineChart = new Chart(ctx).Line(data);
+}
+
+</script>
+{{pass}}

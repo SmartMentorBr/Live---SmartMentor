@@ -1,0 +1,131 @@
+{{extend 'layout.html'}}
+<style>
+#suggestions { position: relative; top: 41px; left: 805px; display: inline-block; }
+.suggestions { background: white; border: solid 1px #808080; }
+.suggestions DIV { padding: 2px 4px 2px 4px; }
+</style>
+<section class="painel-de-controle">
+    <div id="perfil">
+        <img id="foto-perfil" src={{if user.avatar:}}{{=URL('download', args=user.avatar)}}{{else:}} {{=URL('static','images/perfil-cat.png')}} {{pass}}></img>
+        <a href={{=URL('user', args='profile')}} style="float:right;">{{=T('edit my profile')}}</a>
+        <h1 class="green">{{if user.first_name:}}{{=user.first_name}}{{else:}}Nome do usuário{{pass}}</h1>
+        <h4 class="subheader">{{if user.company:}}{{=user.company}}{{else:}}Nome da empresa principal{{pass}}</h4>
+        <a href="#" id="user-site">{{if user.site:}}{{=user.site}}{{else:}}www.example.com{{pass}}</a>
+        <div id="user-social-media">
+        {{if networks:}}
+            {{for network in networks:}}
+                {{if network.network_type == 'Facebook':}}
+                    <a href="http://facebook.com/{{=network.network}}" target="_blank"><img src="{{=URL('static','images/icon-facebook.png')}}"></img></a>
+                {{elif network.network_type == 'Google+':}}
+                    <a href="http://plus.google.com/{{=network.network}}/posts" target="_blank"><img src="{{=URL('static','images/icon-gplus.png')}}"></img></a>
+                {{elif network.network_type == 'LinkedIn':}}
+                    <a href="http://linkedin.com/in/{{=network.network}}" target="_blank"><img src="{{=URL('static','images/icon-linkedin.png')}}"></img></a>
+                {{elif network.network_type == 'Twitter':}}
+                    <a href="http://twitter.com/{{=network.network}}" target="_blank"><img src="{{=URL('static','images/icon-twitter.png')}}"></img></a>
+                {{pass}}
+            {{pass}}
+        {{else:}}
+            <a href="#"><img src="{{=URL('static','images/icon-facebook.png')}}"></img></a>
+            <a href="#"><img src="{{=URL('static','images/icon-gplus.png')}}"></img></a>
+            <a href="#"><img src="{{=URL('static','images/icon-linkedin.png')}}"></img></a>
+            <a href="#"><img src="{{=URL('static','images/icon-twitter.png')}}"></img></a>
+        {{pass}}
+        </div>
+    </div>
+    <div id="minhas-empresas">
+        <a id="new-company" class="form-btn btn-success" href={{=URL('company', args='new')}}>{{=T('New company')}}</a>
+        <h2>{{=T('My Companies')}}</h2>
+        {{if my_companies:}}
+            {{for company in my_companies:}}
+            <div id="empresa">
+                <img id="foto-perfil" src={{if company.avatar:}}{{=URL('download', args=company.avatar)}} {{else:}}{{=URL('static','images/perfil-cat.png')}}{{pass}}></img>
+                <a href={{=URL('company', vars={'company':company.id})}}><h3>{{=company.name}}</h3></a>
+                <p>{{=company.site}}</p>
+                <h6 class="subheader">Ultima atividade em 03 de Janeiro de 3014 | 10:55</h6>
+            </div>
+            {{pass}}
+        {{else:}}
+        <div id="empresa">
+            <img id="foto-perfil" src="{{=URL('static','images/perfil-cat.png')}}"></img>
+            <h3>Uma empresa sensacional.</h3>
+            <p>Pequena frase sobre a empresa.</p>
+            <h6 class="subheader">Ultima atividade em 03 de Janeiro de 3014 | 10:55</h6>
+        </div>
+        <div id="empresa">
+            <img id="foto-perfil" src="{{=URL('static','images/perfil-cat.png')}}"></img>
+            <h3>Uma empresa sensacional.</h3>
+            <p>Pequena frase sobre a empresa.</p>
+            <h6 class="subheader">Ultima atividade em 03 de Janeiro de 3014 | 10:55</h6>
+        </div>
+        {{pass}}
+    </div>
+    <div id="meus-investimentos">
+        {{=form_invest.custom.begin}}
+        <input id="request_company" name="company" class="form-text right" type="text" placeholder="Procurar empresas" />
+        <div id="suggestions" class="suggestions"></div>
+        {{=form_invest.custom.end}}
+        <h2>{{=T("Companies I Invest")}}</h2>
+        {{if inv_companies:}}
+            {{for company_inv in inv_companies:}}
+                <div id="empresa">
+                    <img id="foto-perfil" src={{if company_inv.avatar:}}{{=URL('download', args=company_inv.avatar)}} {{else:}}{{=URL('static','images/perfil-cat.png')}}{{pass}}></img>
+                    <a href={{=URL('company', vars={'company':company_inv.id})}}><h3>{{=company_inv.name}}</h3></a>
+                    <p>{{=company_inv.site}}</p>
+                    <h6 class="subheader">Ultima atividade em 03 de Janeiro de 3014 | 10:55</h6>
+                </div>
+            {{pass}}
+        {{else:}}
+        <div id="empresa">
+            <img id="foto-perfil" src="{{=URL('static','images/perfil-cat.png')}}"></img>
+            <h3>Uma empresa que estou investindo.</h3>
+            <p>Pequena frase sobre a empresa.</p>
+            <h6 class="subheader">Ultima atividade em 03 de Janeiro de 3014 | 10:55</h6>
+        </div>
+        {{pass}}
+    </div>
+    <div id="empreendimentos-em-que-estou">
+        <h1>{{=T("Companies I'm on")}}</h1>
+        <ul>
+            {{for company_on in contr_companies:}}
+            <li>{{=company_on.name}}</li>
+            {{pass}}
+        </ul>
+    </div>
+    <div id="solicitacoes">
+        <h1>{{=T("Requests for me")}}</h1>
+        <ul>
+            {{for request_fm in requests:}}
+            <li><b>{{=T('User')}}:</b> {{=request_fm['from_user']}} | <b>{{=T('Company')}}:</b> {{=request_fm['company']}}
+            <a href={{=URL('enterprising', args=['allow_request', request_fm['rq_id'], request_fm['cp_id'], request_fm['fu_id']])}} class="btn btn-mini btn-success"><i class="icon icon-ok"></i>{{=T('Allow')}}</a> 
+            <a href={{=URL('enterprising', args=['deny_request', request_fm['rq_id'], request_fm['cp_id'], request_fm['fu_id']])}} class="btn btn-mini btn-danger"><i class="icon icon-remove"></i>{{=T('Deny')}}</a> </li>
+            {{pass}}
+        </ul>
+        <div id="empresa">
+            <img id="foto-perfil" src="{{=URL('static','images/perfil-cat.png')}}"></img>
+            <h3>Nome da empresa</h3>
+            <p class="empresa-noficacao">João Francisco quer ser relacionado como investidor na sua empresa.</p>
+            <button class="form-btn btn-success left">Aceitar</button>
+            <button class="form-btn btn-warning left">Recusar</button>
+            <h6 class="subheader">Ultima atividade em 03 de Janeiro de 3014 | 10:55</h6>
+        </div>
+
+    </div>
+</section>
+
+<script>
+jQuery("#request_company").keyup(function(){
+      ajax('get_company', ['company'], 'suggestions')});
+
+$(function() {
+    $('#form_invest').each(function() {
+        $(this).find('input').keypress(function(e) {
+            // Enter pressed?
+            if(e.which == 10 || e.which == 13) {
+                this.form.submit();
+            }
+        });
+
+        $(this).find('input[type=submit]').hide();
+    });
+});
+</script>

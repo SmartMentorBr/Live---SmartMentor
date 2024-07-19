@@ -1,0 +1,152 @@
+{{extend 'layout.html'}}
+
+
+<div id="minhas-empresas">
+    <div id="titulo">
+        <a id="new-company" class="form-btn btn-success" href="#" data-reveal-id="adicionar-empresa" data-animation="fade">{{=T('New company')}}</a>
+        <h2 id="padding_titulo" class="titulo-companies">{{=T('MY COMPANIES')}}</h2>
+    </div>
+     <style>
+    .desc-empre{
+        width: 60%;
+    }
+    </style>
+    {{if my_companies:}}
+    {{for company in my_companies:}}
+    <div class="empresa f-left" data-empresa="{{=company.id}}"> 
+        <div class="pull-left">
+            <img name="foto-perfil" class="img-empre" src={{if company.avatar:}}{{=URL('download', args=company.avatar)}} {{else:}}{{=URL('static','images/imagemdefault.png')}}{{pass}}></img>
+            <div class="pull-left desc-empre">            
+                <div>
+                <!-- <a href="#" class="f-right" name="delete-empresa" id="{{=company.id}}"><span>X</span></a> -->
+                <h3>
+                <a href={{=URL('company', vars={'company':company.id})}}>{{=company.name}}</a></h3>
+                </div>
+                <p>
+                    {{=XML(company.description)[:100]}}...
+                </p>
+                <p>
+                {{if company.site:}} 
+                <a href="{{=company.site}}">{{=company.site}}</a> {{else:}} &nbsp {{pass}}</p>
+
+                {{ mes = company.created_on.strftime('%B') }}        
+                <h6 class="subheader">{{=T('Last activity in')}} {{=company.created_on.strftime(T(mes)+' %d, %Y |  %H:%M')}} </h6>
+            </div>
+        </div>
+    </div>
+    {{pass}}
+    {{else:}}
+    <h3> {{=T('You have no companies even')}}.</h3>
+    {{pass}}
+
+
+    <!-- Modal add empresa -->
+    <div id="adicionar-empresa" class="reveal-modal">
+        <div>
+           <span class="pull-right">
+            <a href="javascript:()" onclick="document.getElementsByClassName('reveal-modal-bg')[0].click()">X</a>
+        </span>
+        <h1 class="green bold">{{=T('Register new company')}}</h1>
+    </div>
+    <div class="cont-new-company">
+        <div class="figure-companies pull-left">
+            <div class="form-avatar">
+                <div class="avatar">
+                    <div id="img">
+                        <img id="foto-perfil" class="avatar" src={{=URL('static','images/imagemdefault.png')}}>
+                    </div>
+                    <div class="caption-avatar">{{=T('Add a photo')}}</div>
+                </div>
+                <div class="container-upload">
+                    <input id="avatar-upload" type="hidden">
+                </div>
+            </div>
+        </div>
+
+        <div class="info-companies pull-left">
+
+            {{=new_company.custom.begin}}
+
+            {{new_company.custom.widget.name["_class"]="input-form-shadow input"}}
+            {{new_company.custom.widget.name["_placeholder"]=T("Company name") }}
+            {{new_company.custom.widget.name["_required"]="required"}}
+            {{=new_company.custom.widget.name}}
+
+            {{new_company.custom.widget.site["_class"]="input-form-shadow input"}}
+            {{new_company.custom.widget.site["_placeholder"]=T("Site: http://www.relatto.com.br") }}
+            {{=new_company.custom.widget.site}}
+
+            {{new_company.custom.widget.description["_class"]="full-width input-form-shadow desc"}}
+            {{new_company.custom.widget.description["_placeholder"]=T("Company description") }}
+            {{=new_company.custom.widget.description}}
+
+            {{new_company.custom.widget.avatar_upload["_value"]="valor_default"}}
+            {{new_company.custom.widget.avatar_upload["_name"]="avatar_upload"}}
+            {{new_company.custom.widget.avatar_upload["_id"]="avatar_upload"}}
+            {{new_company.custom.widget.avatar_upload["_type"]="hidden"}}
+            {{=new_company.custom.widget.avatar_upload}}
+
+
+            <hr>
+            <div class="submit pull-right div-submit">
+                <input type="reset" id="limpaFormCompanies" class="form-btn form btn-sucess recusa form-btn-profile" value="{{=T('Cancel')}}">
+                {{new_company.custom.submit["_class"]="form-btn form btn-success form-btn-profie"}}
+                {{new_company.custom.submit["_value"]=T("Confirm")}}
+                {{new_company.custom.submit["_type"]="button"}}
+                {{new_company.custom.submit["_name"]= "submeterEmpresa"}}
+                {{=new_company.custom.submit}}
+                
+            </div>
+
+            {{=new_company.custom.end}}
+
+            <script>
+
+             $(document).ready(function() {
+                document.getElementById("limpaFormCompanies").addEventListener("click",function(){
+                    document.getElementsByClassName('reveal-modal-bg')[0].click();
+                })
+
+                $('#no_table_avatar').bind("click",function() 
+                { 
+                    var imgVal = $('#no_table_avatar').val(); 
+                    if(imgVal=='') 
+                    { 
+                        alert("empty input file"); 
+
+                    } 
+                    else alert(imgVal);
+                }); 
+            });
+            </script>
+        </div>
+    </div>
+ </div>
+
+
+</div>
+
+<div id="minhas-empresas">
+    <div id="titulo">
+        <h2 id="padding_titulo" class="titulo-companies">{{=T('Companies that I belong')}}</h2>
+    </div>
+    {{if team_companies:}}
+    {{for company in team_companies:}}
+    <div class="empresa">    
+        <div class=" pull-left">
+            <img id="foto-perfil" class="img-empre" src={{if company.avatar:}}{{=URL('download', args=company.avatar)}} {{else:}}{{=URL('static','images/imagemdefault.png')}}{{pass}}></img>
+        </div>
+        <div class=" pull-left">
+
+            <a href={{=URL('company', vars={'company':company.id})}}><h3>{{=company.name}}</h3></a>
+            <p>{{=company.site}}</p>
+
+            {{ mes = company.created_on.strftime('%B') }}        
+            <h6 class="subheader">Ultima atividade em {{=company.created_on.strftime('%d de '+T(mes)+' de %Y |  %H:%M')}} </h6>
+        </div>
+    </div>
+    {{pass}}
+    {{else:}}
+    <h3> {{=T('You are not part of any company yet.')}}</h3>
+    {{pass}}
+</div>

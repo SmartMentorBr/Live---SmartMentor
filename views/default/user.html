@@ -1,0 +1,193 @@
+{{extend 'layout.html'}}
+<div class="user">
+
+    {{if 'login' in request.args: }}
+        {{=form}}
+    {{pass}}
+
+    {{if not request.args(0)=='profile':}}
+    <div class="internal-page-img left">
+        <img src="{{=URL('static', 'images/ballons-reset-password.png')}}" alt="" title="">
+    </div>
+    {{ pass }}
+    <div class="{{ if request.args[0] == 'profile':}}profile{{else:}} internal-page-text left {{ pass }}">
+        <h2>{{ if request.args[0] == 'profile':}} {{=T('Settings')}} {{else:}} {{=T(request.args(0).replace('_',' ').capitalize())}} {{pass}}</h2>
+        
+        {{if request.args(0)=='profile':}}
+            <hr>
+            <h3>{{=T('Edit your profile')}}</h3>
+            
+        {{ pass}}
+        {{if 'request_reset_password' in request.args and not 'request_reset_password' in auth.settings.actions_disabled:}}
+            <p>
+                {{=T("Enter the e-mail account, send you instructions on how you can create a new password.")}}
+            </p>
+            <p>
+                {{=T("It's faster that way.")}}
+            </p>
+            {{=form}}
+            
+        {{elif 'reset_password' in request.args and not 'request_reset_password' in auth.settings.actions_disabled:}}
+            <p>
+                {{=T('Enter your new password for your account.')}}<br>
+                {{=T('After that, you can usually log in with the new password created.')}}
+            </p>
+            {{=form}}
+
+        {{pass}}
+        <div id="web2py_user_form">
+        {{if request.args(0)=='login':}}
+
+            {{#if not 'register' in auth.settings.actions_disabled:}}
+                {{#form.add_button(T('Register'),URL(args='register', vars={'_next': request.vars._next} if request.vars._next else None),_class='btn')}}
+
+            {{#pass}}
+
+            {{#if not 'request_reset_password' in auth.settings.actions_disabled:}}
+                {{#form.add_button(T('Lost Password'),URL(args='request_reset_password'),_class='btn')}}
+            {{#pass}}
+
+            {{#=form}}
+
+            <div class='top' stype='margin-top:45px;'></div>
+            {{=P('Para continuar a usar o Relatto preencha com o email e senha definidos no seu cadastro.')}}
+
+            {{=form.custom.begin}}
+            {{form.elements('#auth_user_email')[0]["_class"]="form-text full-width input-form-shadow"}}
+            {{form.elements('#auth_user_email')[0]["_placeholder"]=T("E-mail")}}
+            {{=form.custom.widget.email}}
+
+            {{form.elements('#auth_user_password')[0]["_class"]="form-text full-width input-form-shadow"}}
+            {{form.elements('#auth_user_password')[0]["_placeholder"]=T("Password")}}
+            {{=form.custom.widget.password}}
+        
+            <button type="submit" class="form-btn btn-action full-width">{{=T('Enter')}}</button>
+            {{=form.custom.end}}
+
+        {{elif request.args(0)=='profile':}}
+                {{form.custom.begin = XML("<form enctype=%(_enctype)s name=%(_name)s action=%(_action)s method=%(_method)s >" % form.attributes)}}
+                
+
+<div id="edit-password" class="reveal-modal">
+        <div>
+            <span class="pull-right">
+                <a href="javascript:()" onclick="document.getElementsByClassName('reveal-modal-bg')[0].click()">X</a>
+            </span>
+            <h3>{{=T('Change my password')}}</h3>
+            <p>
+                {{=T('Just fill in the fields below if you want to change the password. Otherwise, no need to change anything.')}}
+            </p>
+        </div>
+
+        <div class="form-fields-change-password">
+            {{form_password.custom.begin = XML("<form enctype=%(_enctype)s name=%(_name)s action=%(_action)s method=%(_method)s>" % form_password.attributes)}}
+                {{=form_password.custom.begin}}
+                    {{=form_password.custom.widget.old_password}}
+                    {{=form_password.custom.widget.new_password}}
+                    {{=form_password.custom.widget.new_password2}}
+
+                    {{form_password.custom.submit['_class']='btn'}}
+                    {{form_password.custom.submit['_class']= T('Save')}}
+                    {{=form_password.custom.submit}}
+                {{=form_password.custom.end}}
+        </div>
+</div>
+
+                
+              
+                <div class="form-avatar">
+                    <div class="avatar">
+                        <img class="avatar" src={{=get_avatar()}}>
+
+                        {{if not session.linkedin:}}
+                            <div class="caption-avatar">{{=T('change photo')}}</div>
+                        {{pass}} 
+                    </div>
+
+                        {{if not session.linkedin:}}
+                            <div class="container-upload">
+                                <input id="avatar-upload" type="hidden">
+                            </div>
+                        {{pass}}
+                </div>
+
+                <div class="form-fields">
+                    <div class="form-fields-profile">
+                        {{form_profile.custom.begin = XML("<form enctype=%(_enctype)s name=%(_name)s  action=%(_action)s method=%(_method)s class=%(_class)s>" % form_profile.attributes)}}
+                        {{=form_profile.custom.begin}}
+                            {{=form_profile.custom.widget.first_name}}
+                            {{=form_profile.custom.widget.company}}
+                            {{=form_profile.custom.widget.email}}
+                            {{=form_profile.custom.widget.site}}
+                            
+                            {{form_profile.custom.submit['_id']='form_profile_submit'}}
+                            {{form_profile.custom.submit['_class']='full-width'}}
+                            {{form_profile.custom.submit['_value']=T('Save')}}
+                            {{=form_profile.custom.submit}}
+                        {{=form_profile.custom.end}}
+                    </div>                
+                    <div class="form-fields-network">
+
+                        {{form_networking.custom.begin = XML("<form enctype=%(_enctype)s action=%(_action)s method=%(_method)s class=%(_class)s>" % form_profile.attributes)}}
+                        {{=form_networking.custom.begin}}
+                            {{=form_networking.custom.widget.facebook}}
+                            {{=form_networking.custom.widget.googleplus}}
+                            {{=form_networking.custom.widget.twitter}}
+                            {{=form_networking.custom.widget.linkedin}}
+
+                            {{form_networking.custom.submit['_id'] = 'form_networking_submit'}}
+                            {{form_networking.custom.submit['_class'] = 'full-width'}}
+                            {{form_networking.custom.submit['_value'] = T('Save')}} 
+                            {{=form_networking.custom.submit}}
+                        {{=form_networking.custom.end}}
+                    </div>
+                <div class="clear"></div>
+                    &nbsp;
+                <hr>
+                <div class="form-fields-change-password">
+
+    <a id="edit-senha" href="#" data-reveal-id="edit-password" data-animation="fade">
+    <input class="btn salvar" type="button" value="{{=T('Change my password')}}">
+    
+    
+    
+    </a>
+
+                </div>
+                <hr> 
+              
+                </div> 
+             
+                
+            <td>
+   
+        {{else:}}
+        {{pass}}
+        </div> 
+   
+    </div>
+</div> 
+
+
+
+<script language="javascript">
+
+jQuery("#web2py_user_form input:visible:enabled:first").focus();
+{{if request.args(0)=='register':}}
+    web2py_validate_entropy(jQuery('#auth_user_password'),100);
+{{elif request.args(0)=='change_password':}}
+    web2py_validate_entropy(jQuery('#no_table_new_password'),100);
+{{pass}}
+
+    
+</script>
+<script type="text/javascript">
+(function(){
+    var form_profile = document.getElementsByClassName('form_profile');
+    $('.form_profile').attr('id','form_profile');
+    console.log('Executado');
+})();
+
+
+
+</script>

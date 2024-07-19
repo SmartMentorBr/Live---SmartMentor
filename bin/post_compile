@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+# fail fast
+set -e
+
+#echo "BUILD_DIR: $BUILD_DIR :: CACHE_DIR: $CACHE_DIR"
+
+
+# config
+WEB2PY_REPO_URL="https://github.com/web2py/web2py.git"
+WEB2PY_FOLDER="WEB2PY"
+WEB2PY_APPS_FOLDER="$WEB2PY_FOLDER/applications"
+WEB2PY_APP="unovainvest"
+
+# include .files when moving things around
+# shopt -s dotglob
+
+#cd $ORIG_BUILD_DIR
+
+#echo `ls`
+#echo $CACHE_DIR
+
+#echo `pwd` && exit 0
+
+mkdir -p "$CACHE_DIR/$WEB2PY_APP"
+#mv * "$CACHE_DIR/$WEB2PY_APP"
+find . -maxdepth 1 -mindepth 1 ! -name ".profile.d" ! -name "tmp" ! -name ".heroku" -exec mv '{}' "$CACHE_DIR/$WEB2PY_APP" \;
+
+echo "-----> Getting the newest web2py version"
+git clone $WEB2PY_REPO_URL "$WEB2PY_FOLDER" &> /dev/null
+
+mkdir -p "$WEB2PY_APPS_FOLDER/$WEB2PY_APP"
+mv $CACHE_DIR/$WEB2PY_APP/* "$WEB2PY_APPS_FOLDER/$WEB2PY_APP"
+
+if [ -f $WEB2PY_APPS_FOLDER/$WEB2PY_APP/Procfile ]; then
+        mv $WEB2PY_APPS_FOLDER/$WEB2PY_APP/Procfile .
+fi

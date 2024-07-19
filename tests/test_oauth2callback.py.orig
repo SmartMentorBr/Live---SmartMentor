@@ -1,0 +1,25 @@
+# -*- Coding: UTF-8 -*-
+__author__ = 'E. S. Pereira'
+
+import unittest
+from gluon.globals import Request, Session, Storage, Response
+
+execfile("./applications/" + app + "/controllers/default.py")
+
+class Test_oauth2callback(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(self):
+        request = Request(globals())
+        session = Session()
+
+    def test_auth(self):
+<<<<<<< HEAD
+        request.post_vars['code'] = '4/A7xRlTIzQO1-h4qbpwpje-Q1fMCmkYL4shGP8-17lsg'
+        resp = oauth2callback()
+        self.assertIsNotNone(session.token)
+=======
+        request.post_vars["relatto"] = 'RL'
+        resp = oauth2callback()
+        self.assertEqual(resp['mesage'],'RL in msg.')
+>>>>>>> 9c5ffa13b5690bc4634023fd4123c8acab01c0c5

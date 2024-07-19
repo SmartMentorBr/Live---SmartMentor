@@ -1,0 +1,65 @@
+{{extend 'layout.html'}}
+
+{{if session.token_expired is False:}}
+{{else:}}
+	<div class="btn-auth-google">
+		<a href="{{=URL('get_credentials')}}">Obter dados do Google</a>
+	</div>
+{{pass}}
+
+<div id='graficos'>{{=T('General Report')}}</div>
+
+<!-- <div class="grafico">
+  <div class="chart-full">
+    <div class="top">
+      <div class="title"><span>{{=T("General Data")}}</span></div>
+    </div>
+      <canvas id="chart" ></canvas>
+  </div>
+ </div> -->
+
+{{if not empresas:}}
+  <div style='text-align:center;color:#677821'>
+    {{=H1(T('Without companies to reports.'))}}
+  </div>
+
+{{else:}}
+
+    <div class='escolha-data'>
+        <form method='post'>
+
+          <input type='text' class='date' name='data-dia' placeholder='Pesquise uma data' />
+
+          <input type='submit' class='btn-success form-btn btn' value='Pesquisar' />
+
+        </form>
+
+        <p class='dia'>
+          <b>Dia dos gráficos:</b> {{=dia['dia']+" - "+T(dia['mes'])+" - "+dia['ano']}}
+        </p>
+
+      </div>
+
+  {{i = 0}}
+  <div class="grafico">
+    {{for empresa in empresas:}}
+      <div class="chart-half">
+
+          <div class="top">
+            <div class="title">
+              <span>{{=empresa}}</span>
+            </div>
+
+          </div>
+
+          <canvas id="chart{{=i}}"></canvas>
+
+      </div>
+
+   {{i += 1}}
+
+  {{pass}}
+
+  </div>
+
+{{pass}}

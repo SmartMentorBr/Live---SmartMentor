@@ -1,0 +1,48 @@
+# -*- coding: utf-8 -*-
+
+# Authentication with Facebook
+
+FACEBOOK_ID = ''
+FACEBOOK_SECRET = ''
+
+from gluon import current
+from gluon.globals import URL
+
+
+if current.request.is_local:
+	host = 'localhost:8000'
+else:
+	host = 'https://relatto.edupereira.webfactional.com'
+	
+url = URL(scheme='https',host=host,a=current.request.application,f='user',args='login')
+
+URL_AUTENTICACAO = url
+
+
+## Email settings
+
+# if not current.request.env.web2py_runtime_gae:
+#     EMAIL_SERVER =  'smtp.gmail.com:587' or 'logging'
+# else:
+#     EMAIL_SERVER =  'gae'
+
+<<<<<<< HEAD
+EMAIL_SERVER =  'smtp.gmail.com:587' or 'logging'
+=======
+if current.request.is_local:
+    EMAIL_SERVER = 'logging'
+else:
+    EMAIL_SERVER =  'smtp.webfaction.com:25'
+>>>>>>> fix/alerta_empresa_cadastrada
+
+
+#CLIENT_EMAIL = 'kolaborativa.feedback@gmail.com'
+#CLIENT_LOGIN = 'kolaborativa.feedback@gmail.com:redekolaborativa'
+<<<<<<< HEAD
+CLIENT_EMAIL = 'relattoweb@gmail.com'
+CLIENT_LOGIN = 'relattoweb@gmail.com:relatto2014'
+=======
+CLIENT_EMAIL = 'relatto@relatto.com'
+CLIENT_LOGIN = 'relatto:relatto2014'
+
+>>>>>>> fix/alerta_empresa_cadastrada

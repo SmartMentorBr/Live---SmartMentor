@@ -1,0 +1,575 @@
+/* CSS Reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+*{
+    outline: none;
+}
+/* apply a natural box layout model to all elements */
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+
+}
+input,textarea,select{
+    font-family:'Open Sans';
+    background: #fff;
+}
+html,body {
+    background:#FFF;
+    padding:0px 0px 0px 0px;
+    margin:0px 0px 0px 0px;
+    font-family:'Open Sans';
+}
+body { padding-bottom: 20px; }
+.clear { clear:both; }
+.content-center { width: 1140px; margin:0 auto; }
+
+.full{width:97%;margin:0 auto;} /*Aumentar área útil do gráfico*/
+
+.upper { text-transform: uppercase; }
+.error { color:red; font-weight: bold; }
+
+.header-user-bar {
+    height: 55px;
+    background:#677821;
+    border-bottom:solid 5px #89a02c;
+    padding-top:7px;
+}
+.header-user-bar form {
+    float: left;
+    margin-left: 26%;
+}
+.header-user-bar form input[type='text']{
+    padding-top:6px;
+    margin-right: -4px;
+    height: 38px;
+    margin-top: -2px;
+
+    width: 400px;
+    margin-bottom: 0px;
+}
+.form-btn-search {
+    margin: 0!important;
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+    padding-top: 0px!important;
+    padding-bottom: 0px!important;
+    border: 0!important;
+    height: 35px;
+    width: 140px;
+    font-size: 20px!important;
+}
+.info-user {
+    float: right;
+}
+.info-user p{
+    color:#fff;
+    font-size: 14px;
+    display: inline;
+}
+.info-user p:last-child{
+    margin-left: 60px;
+}
+.info-user a{
+    color: #ffd5d5 ;
+}
+#avatar-logged {
+    width: 35px;
+    vertical-align: middle;
+}
+.logo {
+    position: absolute;
+    top: 25px;
+    left:3%;
+}
+.logo-grande{
+    width: 360px;
+}
+.menu-nav {
+    background-color: #dde9af;
+    color: #677821;
+    margin-bottom:18px;
+}
+.menu-nav ul {
+    width:74%;
+    margin: 0 auto;
+    font-size: 13px;
+    text-transform: uppercase;
+    float:right;
+}
+.menu-nav li{
+    display:inline;
+    line-height: 36px;
+    padding: 9px;
+}
+.menu-nav a:hover, .menu-nav a.current-page{
+    text-decoration: none;
+}
+.menu-nav a:hover, .menu-nav a.current-page{
+    background-color: #89a02c;
+    color: #FFF;
+}
+.menu-nav a{
+    color: #677821;
+    padding: 9px;
+}
+
+.main{
+    /*Defido como padrão 1140px*/
+    width:1140px;
+    margin: 0 auto;
+}
+/* Breadcrumb. */
+.breadcrumb {
+   background-color: #f2f2f2;
+   padding:10px;
+   border-bottom: 1px solid #000;
+   font-size: 14px;
+   color: #4d4d4d;
+   margin-bottom: 20px;
+   margin-top: 20px;
+}
+.breadcrumb ul, .breadcrumb li{
+    display: inline;
+}
+.breadcrumb a {
+    color: #008c8e;
+}
+
+/* Sugerir um nome melhor para esse seletor. */
+.container{
+    width:50%;
+    float:left;
+    margin-top:50px;
+}
+
+
+/* ==== FONTES ==== */
+/*Um h1 menor que um h2??? verificar...*/
+h1 {
+    font-size:32px;
+    font-weight:bold;
+}
+
+h2 {
+    color: #657821;
+    font-size: 60px;
+    font-weight:bold;
+}
+
+h3 {
+    font-size:22px;
+    font-weight:normal;
+}
+
+h4 {
+    font-size:18px;
+    font-weight:bold;
+}
+
+h5 {
+    font-size:14px;
+    font-weight:bold;
+}
+
+h6 {
+    font-size:11px;
+    font-weight:bold;
+}
+
+.subheader {
+    font-weight:normal;
+    /*margin-bottom:5px;    */
+    margin-bottom:20px;
+}
+.date-companies{
+    font-weight:normal;
+ margin-bottom:7px;
+}
+
+
+.green {color:#657821;}
+.bold {font-weight:bold;}
+
+a {
+    text-decoration:none;
+    color:#004586;
+}
+
+/* ===== FORMS ==== */
+.form-text, input[type="text"], input[type="password"] {
+
+    height:36px;
+    font-family: "Open Sans";
+    border: 1px solid rgb(192, 192, 192);
+    font-size:18px;
+    color:#666666;
+    padding-left:15px;
+    margin-bottom:10px;
+
+}
+
+.form-btn {
+    font-family:'Open Sans';
+    position: relative;
+    height: 40px;
+    font-size: 20px;
+    padding-left:50px;
+    padding-right:50px;
+    padding-bottom:5px;
+    margin-bottom:10px;
+    color: white;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    border: 0;
+    border-color:#808080;
+    cursor: pointer;
+
+}
+.form-btn:active {
+  top: 1px;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.pass-input {
+    width:206px;
+}
+
+.btn-action {
+    background-color:#00aad4;
+    border-bottom:4px solid #0088aa;
+    -webkit-box-shadow: inset 0 -2px #0088aa;
+    box-shadow: inset 0 -2px #0088aa;
+}
+
+.btn-warning {
+    background-color:#f3b35f;
+    border-bottom:4px solid #eda94d;
+    -webkit-box-shadow: inset 0 -2px #eda94d;
+    box-shadow: inset 0 -2px #eda94d;
+}
+
+.btn-success {
+    background-color:#88aa00;
+    border-bottom:4px solid #677821;
+    -webkit-box-shadow: inset 0 -2px #677821;
+    box-shadow: inset 0 -2px #677821;
+    padding-top:0.5%;
+}
+.btn-success:hover{
+    text-decoration:none;
+    color:white;
+}
+
+.full-width { width:100%; }
+.half-width { width: 50%; }
+.half-width-input-home { width: 49.555555556%; }
+
+/* ==== PAGINAS INTERNAS: WELCOME, RESET SENHA, ETC ==== */
+.internal-page-img {
+    width: 35%;
+    margin-top: 80px;
+}
+.internal-page-text {
+    width: 63%;
+    font-size:22px;
+    margin-top: 80px;
+    margin-left: 2%;
+}
+.internal-page-text p{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* ==== PAINEL DE CONTROLE ==== */
+.painel-de-controle{
+    margin-top:100px;
+    }
+.painel-de-controle h1 {
+    color:#677821;
+    margin-bottom:5px;
+    margin-top:5px;
+    font-size:40px;
+}
+.painel-de-controle h2 {
+    color: #677821;
+    margin-bottom:5px;
+    margin-top:5px;
+    font-size:28px;
+    text-transform:uppercase;
+}
+.painel-de-controle h3 {
+    margin:0px;
+    color:#008c8e;
+}
+.painel-de-controle h4 {color:#4d4d4d; margin:0px }
+.painel-de-controle h6 {color:#4d4d4d; margin:5px}
+.painel-de-controle p {margin:5px;}
+#perfil {
+    border-bottom: 3px solid #ccc;
+    padding-bottom:15px;
+}
+
+#foto-perfil {
+    /*width:108px;
+    height:108px;*/
+    width: 127px;
+    height: 127px;
+    float:left;
+    margin-right:10px;
+}
+
+#user-social-media {float:right;}
+#new-company {float:right;}
+#minhas-empresas{
+    padding-top:10px;
+    padding-bottom:15px;
+    /*border-bottom: 3px solid #ccc;*/
+    overflow:auto;
+}
+
+#adicionar-empresa {
+    top:100px;
+    visibility:hidden;
+    opacity:1;
+}
+
+#meus-investimentos{
+    padding-top:10px;
+    padding-bottom:15px;
+    /*border-bottom: 3px solid #ccc;*/
+    overflow:hidden;
+}
+
+.empresa{
+    float:left;
+    width:510px;
+    margin-top:10px;
+}
+
+#empresa-notificacao {width:100px;}
+.right{float:right;}
+.left{float:left;}
+
+/* ==== PÁGINA HOME ==== */
+.home p {margin-bottom:10px;}
+.home span {margin-left:5px; vertical-align: middle;}
+.home h4 {margin-bottom:15px;}
+.home .img-grande {margin-top: 70px;}
+
+
+/* ==== RESETAR SENHA ==== */
+.user form div {
+    display: inline;
+}
+.user .hide {
+    display:none;
+}
+.user .half-width {
+    width: 49%;
+}
+#no_table_new_password__row {
+    margin-right: 2%;
+}
+
+/* ==== Configurações ==== */
+.profile {
+    font-size: 14px;
+    color: #4d4d4d;
+}
+.profile h2{
+    font-size: 28px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.profile h3{
+    padding: 10px 0;
+}
+.profile form{
+    /*padding: 20px 0;*/
+}
+.form-avatar {
+    float: left;
+    width: 15%;
+    position:relative;
+}
+.form-fields{
+    float: left;
+    width: 85%;
+    margin-bottom: 20px;
+}
+.form-fields input[type="text"] {
+    width: 100%;
+    display: block;
+}
+.form-fields select {
+    display: block;
+}
+.form-fields-profile {
+    float: left;
+    /*padding:0 10px;*/
+    width: 50%;
+}
+.form-fields-network {
+    float: left;
+    padding:0 10px;
+    width: 50%;
+}
+.form-fields-change-password {
+    display: block!important;
+}
+.form-fields-change-password p{
+    margin-bottom: 10px;
+}
+.submit{
+    display: block!important;
+    float: right;
+    /*width: 600px;*/
+    /*width: 263px;*/
+    /*margin: 0 auto;*/
+}
+
+/* Upload */
+.caption-avatar {
+    position: absolute;
+    top: 116px;
+    left: 0px ;
+    padding: 7px 41px;
+    background-color: rgba(0, 110, 184, 0.49);
+    font-size: 13px;
+    color: #fff;
+}
+
+.caption-avatar{
+/*    display:none!important;*/
+}
+
+.form-avatar .avatar{
+    width: 150px;
+height: 150px;
+}
+.form-avatar .avatar:hover {
+    cursor: pointer;
+}
+
+.form-avatar .avatar:hover + .caption-avatar{
+    display:block!important;
+}
+
+.input-file {
+    display:none;
+}
+
+/* Modal do upload */
+.modal {
+    padding: 20px;
+}
+
+.modal div.btn-group{
+    display:block;
+}
+.modal div.btn-group a{
+    text-decoration: none;
+}
+.modal-body {
+    padding:0;
+    margin: 0;
+}
+.modal .btn{
+    padding: 5px 60px;
+    width: 100px;
+    color: #FFF;
+}
+.modal .btn:first-child{
+    margin-right: 5px;
+}
+.modal .btn.btn-primary{
+    background-color: #88aa00 ;
+    border-bottom:4px solid #677821;
+}
+.modal .btn.btn-danger{
+    background-color: #ff0000 ;
+    border-bottom:4px solid #800000 ;
+}
+
+.modal-body img{
+    margin-bottom: 10px;
+    display:block;
+}
+
+
+
+/* ==== MEUS INVESTIMENTOS === */
+#titulo {border-bottom:3px solid #ccc;margin-bottom: 30px;}
+#form_invest {float:right;}
+#padding_titulo {padding-bottom:10px;}
+
+
+/* ==== ICONES === */
+.right-inner-addon {
+    position: relative;
+}
+.right-inner-addion input {
+    padding-right:90px;
+}
+.right-inner-addon i {
+    position: absolute;
+    right: 0px;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+
+
+
+
+
+/*=======================
+CSS Provisório da pagina Home Temporária
+
+===================*/
+   .developerby{
+        font-size: 14px;
+        font-weight: bolder;
+    }
+    .developerby img{
+        vertical-align: middle;
+    }
+    .mensagem-beta{
+        margin: 30px;
+        color: #008c8e;
+        font-size: 22px;
+        line-height: 30px;
+        background: url(../images/Balao.png) no-repeat;
+        padding: 30px 10px 10px 45px;
+        font-weight: bolder;
+
+    }
+    .home-desc{
+        font-size: 22px;
+        line-height: 30px;
+    }
+    .container figure{
+        margin-top: 90px;
+    }

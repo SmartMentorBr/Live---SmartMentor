@@ -1,0 +1,882 @@
+/**
+*
+* Estilo FRONT-END
+* Autor: Jorge Rafael;
+* Observação: Por Favor não Altere sem primeiro entrar em contato;
+* Contato: fale.jorgerafael@gmail.com;
+*
+**/
+
+/*========================== Body ==================================*/
+.cinza{
+    background: #f2f2f2;
+}
+.f-left{
+    float: left;
+}
+.f-right{
+    float: right;
+}
+a,.azul{
+    color:#008c8e;
+}
+#scrollToTop{
+        text-align: center;
+        font-size: 2em;
+        cursor: pointer;
+        display: none;
+        position: fixed;
+        padding-top: 4px;
+        bottom: 17px;
+        right: 30px;
+        height: 30px;
+        width: 30px;
+        border-radius: 23%;
+        box-shadow: 1px 1px 4px rgb(206, 206, 206);
+        background: rgba(172, 172, 172, 0.11);
+    }
+
+/*-------------------------
+---------------------------- Modais
+-----------------------------*/
+
+   .edit-comment{height: 200px;}
+    .edit-post-comentario{
+        height: 100px;
+        height: 100px;
+        width: 70%;
+        margin-right: 10px;
+    }
+    .edit-comment  .recusa {
+        width: 181px;
+        margin-left: 0px;
+    }
+/*============================= Home =================================*/
+.cad-home{
+    width: 40%;
+    margin-left: 45px;
+    float: right;
+}
+
+.input-form-shadow{
+        box-shadow: 0px 0px 1px rgb(136, 136, 136);
+        border: none;
+    }
+.login-titulo{
+    margin-top: 40px;
+}
+
+#responseFlash{
+    font-size: 14px;
+    color: #000000;
+    padding: 9px;
+    font-style: italic;
+    opacity: 0;
+    -moz-animation:esconde 3s linear;
+    -webkit-animation:esconde 3s linear;
+    animation:esconde 3s linear;
+    -webkit-animation-iteration-count: 1; /* Safari and Chrome */
+    -moz-animation-iteration-count:1;
+    animation-iteration-count:1;
+
+}
+@-webkit-keyframes esconde{
+    0%{opacity: 100;}
+    100%{opacity: 0;}
+}
+@-moz-keyframes esconde{
+    0%{opacity: 100;}
+    100%{opacity: 0;}
+}
+.c-pointer{
+    cursor: pointer;
+}
+/*==========  Company.html > Estilos Relácionados a pagina  ==========*/
+
+/*==========  Descrição da Empresa company.html  ==========*/
+
+.info-empresa{
+    height: auto;
+    width: 100%;
+    float: left;
+    margin-bottom: 15px;
+}
+.miniatura{
+    width: 12%;
+    float: left;
+}
+.informacoes{
+    width: 80%;
+
+    float: left;
+    margin-left: 10px;
+}
+.informacoes p{
+    word-break: break-all;
+}
+.titulo{
+    color:#677821;
+}
+.titulo h1{
+    float: left;
+    margin-right: 20px;
+}
+.miniatura img{
+/*    width: 125px;
+    height: 105px;*/
+}
+.navegacao{
+    float:right;
+    width: 100%;
+}
+.navegacao a{
+    float: right;
+}
+
+/*==========  Espaço de Post company.html  ==========*/
+
+.post{
+    width: 100%;
+    float: left;
+    background: #dde9af;
+    /*height: 230px;*/
+}
+.post .cont-form{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.post-titulo{
+    width: 99%;
+    margin-top: 8px;
+    padding: 10px;
+    border: 1.5px solid rgb(194, 194, 194);
+
+}
+.post-conte{
+    border: 1.5px solid rgb(194, 194, 194);
+    min-width: 99%;
+    max-width: 99%;
+    padding: 10px;
+    min-height: 100px;
+    max-height: 100px;
+
+
+}
+
+/*==========  ==================================================
+Estilo Referente a parte de seleção de categorias da pagina company.html
+================================================== ==========*/
+
+
+.categoria-lista{
+
+    width: 200px;
+    background: #F0F0F0;;
+    height: auto;
+
+
+}
+
+
+.categorias{
+    float: left;
+    width: 70%;
+    position: relative;
+    background: #C6D58C;
+    height: 40px;
+    margin-left: 6px;
+}
+.ico-notification{float: right;margin-top: 3px;margin-right: 5px;cursor: pointer;}
+.diretorio-categorias{
+    float: left;
+    margin-right: 10px;
+
+}
+
+.categorias-selecionadas{
+    float: left;
+padding: 6px 10px;
+font-weight: bolder;
+font-size: 16px;
+text-align: left;
+min-height: 30px;
+background: rgba(198, 213, 140, 0.33);
+line-height: 2;
+
+width: 73%;
+overflow: auto;
+}
+
+
+
+
+.enviar{
+    float: right;
+    margin-right: 6px;
+}
+.categoria-lista{
+    float: left;
+    text-align: left;
+
+}
+.categoria-lista input[type="text"]{
+    width: 140px;
+    border: 1.5px solid rgb(194, 194, 194);
+    height: 40px;
+    outline: none;
+    padding-right: 10px;
+    margin-left: 6px;
+    font-size: 14px;
+}
+
+.categoria-lista #categoriaClick{
+    background: #88aa00;
+    color: white;
+    border: none;
+    height: 40px;
+    width: 200px;
+    outline: none;
+}
+
+#lista-c {
+    box-shadow: 0px 4px 6px rgb(207, 207, 207);
+}
+#lista-c ul{
+
+    overflow-y: auto;
+    height: 100px;
+}
+#lista-c ul li{
+    list-style: none;
+    padding: 5px;
+    font-weight: bolder;
+}
+#lista-c ul li input{
+    margin-right: 4px;
+}
+
+#lista-c .addCategoria{
+    padding: 0px 6px 0px 6px;
+
+    font-size: 18px;
+
+    border-bottom: 0px;
+}
+#lista-c .confirma{
+    width: 94%;
+    padding: 0px;
+    margin: 0px 8px 10px 6px;
+    outline: none;
+}
+
+
+/*============================================================
+Estilo do Feed de Notícias da pagina company.html
+============================================================*/
+
+.feed{
+
+    width: 69%;
+    margin-top: 10px;
+    min-height: 400px;
+    padding-bottom: 10px;
+
+}
+
+.post-feed{
+    width: 100%;
+    float: left;
+    margin-top: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgb(223, 223, 223);
+}
+.post-feed .miniatura{
+    width: 20%;
+}
+.post-feed .miniatura img{
+    width: 129px;
+    height: 129px;
+
+}
+.post-feed .conteudo{
+    width: 80%;
+
+}
+.conteudo p{
+    word-break: break-all;
+}
+.post-feed .data{
+    color: gray;
+}
+/*==================================================
+
+Estilo da postagem da pagina company.html
+
+============================================================*/
+.postagem{
+
+    min-height: 120px;
+    /*border: 1px solid rgb(235, 235, 235);*/
+    padding-left: 10px;
+}
+.postagem header{
+    width: 100%;
+}
+
+.postagem header .opcoes{
+    margin-right: 20px;
+}
+
+.postagem section{
+    margin-top: 5px;
+    width: 95%;
+    text-align: justify;
+    word-wrap: break-word;
+}
+.postagem footer{
+    margin-top: 10px;
+    width: 100%;
+}
+
+/*==========  ==================================================
+Estilo do espaço de comentário postado da pagina company
+================================================== ==========*/
+
+.comentario{
+    margin-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+    border-left: 3px solid #88aa00;
+    background: rgb(226, 241, 163);
+}
+
+.comentario-editando{
+    box-shadow: 1px 1px 9px rgb(197, 186, 186);
+    background: rgb(188, 197, 152) ;
+}
+
+.comentario .conteudo{
+    margin-top: 10px;
+}
+.comentario .miniatura img{
+    width: 100px;
+    height: 100px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+/*============================================================
+Estilo do espaço de postagem de comentário da pagina company
+============================================================*/
+.post-comentario{
+    padding: 10px;
+    min-width: 480px;
+    min-height: 70px;
+    max-width: 480px;
+    max-height: 70px;
+    border: none;
+    margin-bottom: 10px;
+}
+.btn-comentar,.btn-cancelar{
+    margin-right: 20px;
+    font-size: 20px;
+    outline: none;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.btn-cancelar{
+    background: gray;
+}
+
+
+/*===========================================================================
+Espaço da Sidebar (Widgets da pagina Company)
+==============================================================================*/
+
+.widgets{
+
+    width: 25%;
+    margin-top: 10px;
+    margin-left: 64px;
+    min-height: 400px;
+
+}
+
+.membros{
+    width: 100%;
+    margin-bottom: 20px;
+}
+.membros h1{
+
+}
+.membros .thubmail{
+    margin-bottom:10px;
+    width: 100%;
+    height: auto;
+    float: left;
+}
+.membros figure{
+    float: left;
+    width: 90px;
+    height: 90px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+
+}
+.membros img{
+    position: absolute;
+    z-index: 1;
+    width: 90px;
+    height: 90px;
+
+}
+
+/*Classes para status da Thubmail dos membros*/
+.membros .status{
+    position: absolute;
+    z-index: 2;
+
+    width: 10px;
+    margin: 75px 40px 40px 75px;
+    height: 10px;
+    border-radius: 5px;
+}
+
+.investidor{
+    background: green;
+}
+.membro{
+    background:rgba(255, 245, 0, 1);;
+}
+.offline{
+    background: gray;
+}
+.dono{
+    background: rgba(0, 153, 255, 0.9);
+    border: 1px solid rgb(90, 96, 230);
+}
+.delete{
+cursor: pointer;
+color: #fff;
+position: absolute;
+z-index: 2;
+margin: 0px 0px 0px 77px;
+}
+/*Classes para status da Thubmail dos membros*/
+
+.membros input[type="search"]{
+
+    border: 1px solid rgb(192, 192, 192);
+    float: right;
+    /*width: 80%;*/
+    height: 30px;
+    outline: none;
+    padding-left: 10px;
+    background: rgba(230, 230, 230, 0.56);
+    color: rgb(0, 0, 0);
+
+}
+.widget-categoria{
+    width: 100%;
+}
+.widget-categoria ul li{
+   list-style: none;
+    margin-top: 11px;
+    margin-left: 10px;
+    border-bottom: 1px solid gray;
+    border-radius: 5px;
+    padding: 5px;
+    background: #dde9af;
+}
+
+
+
+/*==========  =========================================================
+Estilo referente a Pagina de Atividades Recentes
+================================================ ==========*/
+.topo-atividades-recentes{
+    width: 100%;
+    border-bottom: 1px solid rgb(228, 228, 228);
+}
+.btn-load-feed{
+    margin-top: 5px;
+    width: 100%;
+    height: 60px;
+    background: none;
+    border: none;
+    outline: none;
+    color: rgb(123, 144, 255);
+}
+.btn-load-feed:hover{
+    background: rgba(0, 150, 196, 0.15);
+}
+.btn-load-feed:active{
+
+    background: rgba(0, 150, 196, 0.3);
+}
+.pedido{
+    margin-top: 10px;
+    background: rgb(226, 241, 163);
+    padding: 20px;
+
+}
+.pedido img{
+    width: 60px;
+    float: left;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+.pedido-descricao{
+    margin-left: 5px;
+}
+.recusa{
+    background: red;
+}
+.btn-interacao{
+    font-size: 20px;
+    width: 100px;
+    padding: 0px;
+}
+.recusa{
+    margin-left: 5px;
+    background: red;
+    border-bottom:4px solid rgb(209, 0, 0);
+    -webkit-box-shadow:none;
+    box-shadow: none;
+}
+.interacao{
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+/*==================================================
+
+Layout Configurações do Usuário Layout
+
+===================================================*/
+
+.form-fields-profile input,
+.form-fields-network input,
+.input-com-sombra{
+    border: 1px solid lightgrey;
+    box-shadow: 0px 0px 1px rgb(230, 230, 230);
+    height: 45px;
+    width: 449px;
+}
+.form-fields-profile input[type="submit"],
+.form-fields-network input[type="submit"],
+.form-fields-profile input[type="button"],
+.form-fields-network input[type="button"]
+{
+    background: #88aa00;
+    color: white;
+    width: 100%;
+}
+.form-fields-change-password input{
+    width: 220px;
+    border: 1px solid lightgrey;
+    box-shadow: 0px 0px 1px rgb(230, 230, 230);
+}
+.form-fields-change-password input[type="submit"],
+.form-fields-change-password input[type="button"]
+{
+  height: 36px;
+  margin-bottom: 10px;
+  background: #88aa00;
+  color: white;
+}
+
+.form-btn-profile{
+    padding-top: 0px;
+}
+.form-btn-profile-submit{
+padding-left: 15px;
+padding-right: 15px;
+}
+
+
+/*=========================================
+
+Página das Minhas Empresas
+
+==============================*/
+
+.titulo-companies,.titulo-investimentos{
+    font-size: 40px;
+}
+.modal-backdrop{
+    z-index: 100;
+}
+#suggestions {
+    /*position: relative;  display: inline-block; */
+}
+
+.suggestions {
+    background: white;
+    width: 100%;
+    /*margin-top: -11px;*/
+    border: solid 1px #C5C5C5;
+}
+.suggestions div {
+    padding: 2px 4px 2px 4px;
+    cursor: pointer;
+}
+.suggestions div:hover{
+    background: rgb(218, 218, 218);
+    font-style: italic;
+}
+
+ .desc-empre{
+        width: 75%;
+        padding-right: 10px;
+        padding-left: 10px;
+        text-align: justify;
+    }
+    .desc-empre h3{
+        line-height: initial;
+    }
+    .img-empre{
+        width: 127px;
+        height: 127px;
+        float: left;
+        margin-right: 10px;
+    }
+/*===================================================
+
+Layout Criar uma nova empresa
+
+===================================================*/
+
+.reveal-modal{
+    background: rgba(255,255,255,1.00);
+    height: auto;
+    max-height: 80%;
+}
+
+.figure-companies{
+           width: 15%;
+}
+.figure-companies .form-avatar{
+    width: 100%;
+}
+.figure-companies .caption-avatar{
+    top: 93px;
+    left: inherit;
+    padding: 7px 21px;
+}
+
+.info-companies{
+width: 84%;
+}
+.info-companies .input{
+width: 49%;
+margin-right: 4px;
+border: none;
+}
+.info-companies .desc{
+min-width: 99%;
+min-height: 80px;
+max-width: 99%;
+max-height: 80px;
+padding: 20px 10px;
+font-size: 19px;
+}
+.cont-new-company{
+margin-top: 20px;
+}
+.div-submit{
+margin-right: 7px;
+width: auto;
+}
+
+/*==================
+
+=================*/
+
+.btn-upload{
+    padding-left:30px;
+    padding-right:30px;
+    margin: auto 10px;
+}
+.btn-upload:disabled{
+    background: gray;
+}
+.modal-upload{
+    top: 1%;
+    height: auto;
+    max-height: 95%;
+    overflow-y:auto;
+}
+
+/*==================
+
+Pagina de Busca
+
+
+*/
+
+
+.resultList {
+    line-height: 3;
+}
+.resultDados{
+   margin-right: 12px;
+border-bottom: 1px solid rgb(218, 218, 218);
+padding-bottom: 12px;
+margin-bottom: 11px;
+width: 80%;
+
+}
+.resultDadosImg{
+                margin-right: 10px;
+width: 100px;
+margin-top: 13px;
+}
+
+.paginador{
+    text-align: center;
+    font-size: 20px;
+}
+#parametroBusca{
+    font-weight: normal;
+}
+
+/* ============================
+
+Layout Modal Editar Empresa
+
+=========================*/
+
+#editar-empresa{
+    min-height: 500px;
+    max-height: none;
+}
+.avatar-edit-company{
+    float: left;
+    width: 17%;
+}
+.info-edit-company{
+    float: left;
+    width: 80%
+}
+.input-edit-company{
+    width: 49%;
+}
+.textarea-edit-company{
+    width: 99%;
+    max-width: 99%;
+    padding-left: 15px;
+    padding-top: 10px;
+}
+.thumb-membro{
+    height: 80px;
+    margin-right: 10px;
+}
+.membro-info{
+    width: 48%;
+}
+.info-funcao-membro{
+    margin-top: 24px;
+}
+.edit-buttons{
+    margin-right: 50px;
+}
+
+.linkedin{
+    width:215px;
+    height:41px;
+    background:url('../images/linkedin/default.png');
+}
+.linkedin:hover{
+    background:url('../images/linkedin/hover.png');
+}
+
+.grafico{
+    margin:50px auto 50px auto;
+    text-align:justify;
+    width:100%;
+
+}
+.grafico:after {
+    content: '';
+    width: 100%;
+    display: inline-block;
+}
+
+.grafico{
+    /*border:1px solid #000;*/
+}
+
+.chart-full, .chart-half{
+    /*border: 2px solid yellow;*/
+}
+.chart-full{
+    display: inline;
+    width:100%;
+    height:350px;
+}
+.chart-half{
+    margin-bottom:10px;
+    display: inline-block;
+    width:49%;
+    /*height:340px;*/
+    height:auto;
+}
+canvas{
+    /*border:2px solid cyan;*/
+    width:100%;
+    height:100%;
+}
+.top{
+    width:100%;
+    height:auto;
+    /*border:2px solid blue;*/
+    text-align:center;
+
+}
+.top .title{
+    font-size:32px;
+    text-transform:uppercase;
+    color:#137A3F;
+    display: inline;
+    border-bottom:2px solid #137A3F;
+    font-weight: bolder;
+}
+
+.escolha-data{
+    width:500px;
+    height:auto;
+    margin:30px auto 0 auto;
+    /*border:1px solid #000;*/
+}
+.dia{
+    text-align: center;
+    padding:10px;
+    display: block;
+    font-size: 18px;
+
+.btn-auth-google{
+    width:200px;
+    height: auto;
+    margin:10px 0;
+    padding:5px;
+    border-radius:5px;
+    margin-bottom: 10px;
+    background:#209A40;
+    box-shadow: 0px 3px 0px #000;
+    transition:0.1s all;
+    float:right;
+}
+.btn-auth-google a{
+    text-decoration: none;
+    font-size:15px;
+    text-align: center;
+    color:white;
+    font-weight:bolder;
+    line-height: 30px;
+    display: block;
+}
+.btn-auth-google:hover{
+    background:#39A456;
+}

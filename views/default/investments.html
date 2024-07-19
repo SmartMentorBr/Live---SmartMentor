@@ -1,0 +1,81 @@
+{{extend 'layout.html'}}
+
+
+<div id="meus-investimentos">
+    <div id="titulo">
+    {{=form.custom.begin}}
+        <div class="right-inner-addon">
+            <i class="icon-plus"></i>
+            <input id="request_company" name="company_name" class="form-text right" type="text" placeholder="{{=T('Add companies')}}" autocomplete="off"/>
+            <input type="hidden" id="request_company_id" name="company_id"/>
+        </div>
+    <div id="suggestions" class="suggestions"></div>
+    {{=form.custom.end}}
+    <h2 id="padding_titulo" class="titulo-investimentos">{{=T("MY INVESTMENTS")}}</h2>
+    </div>
+    {{if companies:}}
+        {{for company in companies:}}
+            <div class="empresa">
+                <div class="pull-left">
+                    <img name="foto-perfil" class="img-empre" src="{{if company.company_id.avatar:}}{{=URL('download', args=company.company_id.avatar)}} {{else:}}{{=URL('static','images/imagemdefault.png')}}{{pass}}"/>
+                </div>
+                <div class="pull-left">  
+                <a href="{{=URL('company', vars={'company':company.company_id.id})}}">
+                    <h3>{{=company.company_id.name}}</h3>
+                </a>
+                <p>{{=company.company_id.site}}</p>
+                {{ mes = company.company_id.created_on.strftime('%B') }}        
+                <h6 class="subheader">{{=T('Founded in')}}{{=company.company_id.created_on.strftime(T(mes)+' %d, %Y')}}</h6>
+                </div>
+            </div>
+        {{pass}}
+    {{else:}}
+    <h3>{{=T("You're not yet a investor in a company.")}}</h3>
+    {{pass}}
+</div>
+<div id="investimentos-aprovacao">
+    <div id="titulo">
+    <h2 id="padding_titulo" class="titulo-investimentos">{{=T("COMPANIES WAITING FOR APPROVAL")}}</h2>
+    </div>
+    {{if companies_waiting:}}
+        {{for c in companies_waiting:}}
+            <div class="empresa"  data-company="{{=c.id}}">
+                <img name="foto-perfil" class="img-empre" src="{{if c.company_id.avatar:}}{{=URL('download', args=c.company_id.avatar)}} {{else:}}{{=URL('static','images/imagemdefault.png')}}{{pass}}"></img>
+                <a href="#"><h3>{{=c.company_id.name}}</h3></a>
+                <p>{{=c.company_id.site}}</p>
+                {{ mes = c.company_id.created_on.strftime('%B') }}
+                <h6 class="date-companies">{{=T('Founded in')}} {{=c.company_id.created_on.strftime(T(mes)+' %d, %Y')}}</h6>
+                <input type="button" id="{{=c.id}}" name="cancel-investiment" value="{{=T('Cancel')}}" class="btn-success form-btn btn-interacao recusa btn pull-left">
+            </div>
+        {{pass}}
+    {{else:}}
+    <h3>{{=T('There is no company for approval')}}</h3>
+    {{pass}}
+</div>
+
+
+<script>
+    function addCompanyId(name, id)
+    {
+        jQuery('#request_company').val(''+name+'');
+        jQuery('#request_company_id').val(id);
+    }
+
+
+    jQuery("#request_company").keyup(function(){
+          ajax('get_company', ['company_name'], 'suggestions');
+    });
+
+    jQuery("#request_company").change(Sugestoes);
+
+    function Sugestoes(){         
+            var sugestoes = document.getElementsByName("sugestao");
+            for (var i = 0; i < sugestoes.length; i++) {
+                sugestoes[i].addEventListener("click",function(){
+                    $('#form_invest').submit();
+                });
+            }
+    }
+    $(this).find('input[type=submit]').hide();
+   
+</script>

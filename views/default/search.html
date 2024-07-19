@@ -1,0 +1,144 @@
+{{extend 'layout.html'}}
+
+
+
+{{if 'q' in request.vars:}}
+	
+	{{if topics:}}
+	
+	
+	<h1 class="titulo">{{=T('Search for')}}:  <span name="parametroBusca"></span> </h1> 	
+	
+		{{for topic in topics:}}
+				<div class="f-left resultDados">
+					<figure class="pull-left resultDadosImg">
+						{{if session.linkedin:}}
+			                <img src="
+			                {{if topic.created_by.avatar_linkedin:}}
+			                    {{=topic.created_by.avatar_linkedin}}
+			                {{pass}}"
+			                    alt="{{=topic.created_by.first_name}}">
+			            {{else:}}
+			                <img src="
+			                {{if topic.created_by.avatar:}}
+			                    {{=URL('download', args=topic.created_by.avatar)}}
+			                {{else:}}
+			                    {{=URL('static','images/imagemdefault.png')}}
+			                {{pass}}" 
+			                    alt="{{=topic.created_by.first_name}}">
+			            {{pass}}
+						
+					</figure>
+
+				<div class="pull-left">
+					<h3><a href={{=URL('topic', args=[topic['id']])}}>{{=topic['title']}}</a></h3>
+					{{if len(topic['tp_content']) > 140:}}
+						<p class="resultList" data-texto>{{=XML(topic['tp_content'][:141])}}...</p>
+					{{else:}}
+						<p class="resultList" data-texto>{{=XML(topic['tp_content'])}}</p>
+					{{pass}}
+				
+				<b>{{=T('Posted on')}}:</b> {{=topic['company'].name}} 
+						
+				{{ mes = topic['created_on'].strftime('%B') }}
+				<b>Por:</b> {{=topic['created_by'].first_name}} {{=topic['created_by'].last_name}} - {{=topic['created_on'].strftime(T(mes)+' %d, %Y |  %H:%M')}} ( <a href={{=URL('topic', args=[topic['id']])}}> {{=T("Post Reply")}}</a> )
+				<br>
+							<b>{{=T('Categories')}}:</b>
+							{{if topic['tags'] != None:}} 
+								{{for tag in topic['tags']:}} 
+									<a href="{{=URL('company',vars=dict(company=topic.company.id, tag=tag.tag))}}">{{=tag.tag}}</a>
+								{{pass}}
+							{{else:}}
+								{{=T('Whitout category')}}
+							{{pass}}
+				</div>
+						
+				</div>
+			</span>
+			
+		{{pass}}
+	{{pass}}
+	
+	<!-- Criar condição para se topico existir -->
+	<!-- 
+			Se eu buscar só umm comentário e não um tópico ta dando erro !! 
+			agora se eu buscar um tópico, ai funciona de boa !!
+	 -->
+	{{if replies:}}	
+	
+		<h1 class="titulo pull-left">{{=T('comments with')}}: <span name="parametroBusca"></span> </h1>
+		<br><br>
+		
+		{{for reply in replies:}}
+			
+			
+				<div class="pull-left resultDados">
+					<figure class="pull-left resultDadosImg">
+						{{if session.linkedin:}}
+	                        <img src="
+	                        {{if reply.created_by.avatar_linkedin:}}
+	                            {{=reply.created_by.avatar_linkedin}}
+	                        {{else:}}
+	                            {{=URL('static','images/imagemdefault.png')}}
+	                        {{pass}}" 
+	                            alt="{{=reply.created_by.first_name}}">
+	                    {{else:}}
+	                        <img src="
+	                        {{if reply.created_by.avatar:}}
+	                            {{=URL('download', args=reply.created_by.avatar)}}
+	                        {{else:}}
+	                            {{=URL('static','images/imagemdefault.png')}}
+	                        {{pass}}" 
+	                            alt="{{=reply.created_by.first_name}}">
+	                    {{pass}}
+						
+					</figure>
+					<div class="pull-left">
+							<h3><a href={{=URL('topic', args=[reply['topic']['id']])}}>{{=reply['topic'].title}}</a></h3>
+						<p data-texto>
+							{{=XML(reply['rp_content'])}}
+						</p>
+						{{ mes = reply['created_on'].strftime('%B') }}
+					
+						<b>{{=T('By')}}:</b> {{=reply['created_by'].first_name}} - 
+						<b>{{=T('Reviewed')}} </b> {{=reply['created_on'].strftime(T(mes) +' %d, %Y |  %H:%M')}} 
+						(<a href={{=URL('topic', args=[reply['topic']['id']])}}> <b>{{=T('Reply')}}</b></a>)
+						<br>
+						<b>{{=T('On topic')}}:</b> <a href="{{=URL('topic', args=[reply['topic'].id])}}">{{=reply['topic'].title}}</a>
+						<b>{{=T('The company')}}: </b><a href="{{=URL('company',vars=dict(company=reply['topic'].company.id))}}">{{=reply['topic'].company.name}}</a>
+						<br>
+						{{=T('Categories')}}:
+						{{if reply.tags:}}
+							{{for tag in reply.tags:}} <a href="{{=URL('company',vars=dict(company=reply.topic.company.id, tag=tag.tag))}}">{{=tag.tag}}</a>{{pass}}</p>
+						{{else:}}
+							{{=T('Whitout category')}}
+						{{pass}}
+					</div>
+				</div>
+				
+				
+		{{pass}}	
+	{{pass}}
+
+<!-- 	<div class="paginador">
+		<a href="#"> << </a>
+		<a href="#"> < </a>
+		<a href="#"> <b>1</b> </a>
+		<a href="#"> 2 </a>
+		<a href="#"> 3 </a>
+		<a href="#"> ... </a>
+		<a href="#"> 4 </a>
+		<a href="#"> 5 </a>
+		<a href="#"> > </a>
+		<a href="#"> >> </a>
+	</div> -->
+
+	
+
+	{{if not topics and not replies:}}
+		{{=T('No registers found.')}}
+	{{pass}}
+{{pass}}
+
+
+

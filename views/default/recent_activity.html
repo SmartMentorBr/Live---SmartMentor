@@ -1,0 +1,289 @@
+{{extend 'layout.html'}}
+<style>
+
+</style>
+
+<section class="topo-atividades-recentes pull-left">
+    <h1 class="titulo">{{=T("Recent activity")}}</h1>
+</section>
+
+<div id="edit-comment" class="reveal-modal edit-comment">
+        <div>
+            <span class="pull-right">
+                <a href="" onclick="document.getElementsByClassName('reveal-modal-bg')[0].click();">X</a>
+            </span>
+            <h1 class="green bold">{{=T('Editing reply')}}</h1>
+        </div>
+        <div class="cont-edit-company">
+            {{=form_reply_edit.custom.begin}}
+                {{form_reply_edit.custom.widget.rp_content["_class"] = "edit-post-comentario pull-left"}}
+                {{form_reply_edit.custom.widget.rp_content["_id"] = "contentReply"}}
+                {{=form_reply_edit.custom.widget.rp_content}}
+                {{form_reply_edit.elements('#reply_topic')[0]["_type"]="hidden"}}
+                {{=form_reply_edit.custom.widget.topic}}
+
+                <input type="hidden" name="reply_id" value="" id="idPostReply">
+                <input type="submit" id="reply_save_btn" class="btn-success form-btn btn btn-comentar pull-left" value='{{=T("Save Comment")}}'/>
+                <input type="button" class="btn-success form-btn btn btn-comentar recusa pull-left" value="{{=T('Cancel')}}" onclick="document.getElementsByClassName('reveal-modal-bg')[0].click();">
+            {{=form_reply_edit.custom.end}}
+        </div>
+</div>
+
+
+<section class="feed pull-left">
+    <!-- <h4>TimeLine</h4> -->
+    <!-- Publicação -->
+    <!-- Repetir esse trexo para gerar mais postagens -->
+    {{for topic in timeline:}}
+        <article class="post-feed">
+            <section class="miniatura">
+                <figure>
+                    <a href="{{=URL('company',vars=dict(company=topic.company.id))}}"><img src="{{if topic.company.avatar:}}{{=URL('download', args=topic.company.avatar)}} {{else:}}{{=URL('static','images/imagemdefault.png')}}{{pass}}" alt="{{=topic.company.name}}" alt="Thubmail da Empresa"></a>
+                </figure>
+            </section>
+            <section class="conteudo pull-left">
+                <!--Espaço da Publicacao Principal ! -->
+                <article class="postagem">
+                    <!-- Titulo e Editar -->
+                    <header class="pull-left">
+                        <span class="pull-left nick">
+                            <strong>
+                                <a href="{{=URL('company',vars=dict(company = topic.company.id))}}">{{=topic.company.name}}</a> >
+                            </strong>
+                            <strong>
+                                <span>{{=topic.created_by.first_name}} {{=topic.created_by.last_name}}</span>
+                            </strong>
+                        </span>
+                        <span class="pull-right opcoes">
+                            {{if topic.company.id in my_companies or topic.created_by == auth.user.id:}}
+                            <a href="{{=URL('company', vars=dict(company=topic.company.id,edit=topic.id))}}">Editar</a>
+                             |
+                            <a href="{{=URL('topic', args=['delete',topic.id])}}">x</a>
+                            {{pass}}
+                        </span>
+                    </header>
+                    <!-- Conteudo da Postagem -->
+                    <section class="pull-left">
+                        <p data-texto>
+                            {{=topic.tp_content}}
+                        </p>
+                    </section>
+                    <!-- Espaço para categoria, data, e link da postagem -->
+                    <footer class="pull-left">
+                        <span>
+                            <strong>{{=T('Posted on')}}:</strong>
+                        </span>
+                        <span class="data">
+                            {{=prettydate(topic.created_on)}}
+                        </span>
+
+                        <span>
+                            <strong>{{=T('Modified on')}}:</strong>
+                        </span>
+                        <span class="data">
+                            {{=prettydate(topic.modified_on)}}
+                        </span>
+                        <span>
+                            (<a href="{{=URL('topic', args=[topic.id])}}">
+                                {{=T("Post Reply")}}
+                            </a>)
+                        </span>
+                        <p>
+                        <span>
+                            {{if topic.tags is not None:}}
+                                <stron>{{=T('Categories')}}:</strong>
+                                {{for tag in topic.tags:}}
+                                <a href="{{=URL('company',vars=dict(company=topic.company.id, tag=tag.tag))}}">{{=tag.tag}} </a>,
+                                {{pass}}
+                            {{else:}}
+                                <a href="{{=URL('company',vars=dict(company = topic.company.id))}}">{{=T('Whitout category')}}</a>
+                            {{pass}}
+                        </span>
+                        </p>
+                    </footer>
+                </article>
+                <!--Espaço da Publicacao Principal ! -->
+                {{for reply in topic.replies:}}
+                <!-- Espaço dos comentários -->
+                <section class="comentario pull-left">
+                    <section class="miniatura">
+                        
+                        <figure>
+                            {{if session.linkedin:}}
+                                <img src="
+                                {{if reply.created_by.avatar_linkedin:}}
+                                    {{=reply.created_by.avatar_linkedin}}
+                                {{else:}}
+                                    {{=URL('static','images/imagemdefault.png')}}
+                                {{pass}}" 
+                                    alt="{{=reply.created_by.first_name}}">
+                            {{else:}}
+                                <img src="
+                                {{if reply.created_by.avatar:}}
+                                    {{=URL('download', args=reply.created_by.avatar)}}
+                                {{else:}}
+                                    {{=URL('static','images/imagemdefault.png')}}
+                                {{pass}}" 
+                                    alt="{{=reply.created_by.first_name}}">
+                            {{pass}}
+                        </figure>
+                    </section>
+                    <section class="conteudo pull-left">
+                        <!-- comentario ! -->
+                        <article class="postagem">
+                            <!-- nome do usuario -->
+                            <header class="pull-left">
+                                <span class="pull-left nick">
+                                    <strong>
+                                        <a href="#">{{=reply.created_by.first_name}} {{=reply.created_by.last_name}}</a>
+                                    </strong>
+                                </span>
+                                <span class="pull-right opcoes">
+                                    {{if topic.company.id in my_companies or reply.created_by == auth.user.id:}}
+                                    <a href="#" data-reveal-id="edit-comment" data-post="{{=reply.id}}">{{=T("Edit")}}</a> 
+                                        |
+                                        <a href="{{=URL('delete_reply', vars=dict(id = reply.id, company = 'recent')) }}">x</a>
+                                    {{pass}}
+                                </span>
+                            </header>
+                            <!-- Postagem -->
+                            <section class="pull-left">
+                                <p data-texto>
+                                {{=reply.rp_content}}
+                                </p>
+                            </section>
+                            <!-- Espaço para data -->
+                            <footer class="pull-left">
+                                <span class="data">
+                                    {{=prettydate(topic.created_on)}}
+                                </span>
+                            </footer>
+                        </article>
+                                <!-- Inicio da postagem do comentário -->
+                    </section>
+                </section>
+                {{pass}}
+                        <!--         Espaço de responsa de tópicos -->
+                        <section class="comentario pull-left hide">
+                            <section class="miniatura">
+                                <figure>
+                                    <img src="#" alt="Thubmail da Empresa">
+                                </figure>
+                            </section>
+                            <section class="conteudo pull-left">
+                                <textarea class="post-comentario" placeholder="{{=T('Write a comment')}}"></textarea>
+                                <input type="button" class="btn-success form-btn btn btn-comentar pull-right" value="{{=T('Post Comment')}}"/>
+                                <input type="button" class="btn-success form-btn btn btn-cancelar pull-right" value="{{=T('Cancel')}}"/>
+                            </section>
+                        </section>
+            </section>
+              <!-- Espaço para postar comentário -->
+        </article>
+        <!-- Repetir esse treço para gerar mais postagens -->
+    <!-- Publicação -->
+    <hr>
+    {{pass}}
+
+    <!-- Caso não haja nenhuma atividade recente -->
+    {{if timeline == None or timeline == []:}}
+    <section>
+        <h3>{{=T('There is no recents activities')}}</h3>
+    </section>
+    {{pass}}
+    <!--
+    <section>
+        <input type="button" class="btn-load-feed" value="Carregar Posts Anteriores">
+    </section>
+    -->
+
+</section>
+</section>
+<aside class="widgets pull-left">
+    <h4>{{=T("Important Notifications")}}</h4>
+    <!-- Esse espaço é onde fica a notificação, que pode ser repetido  -->
+        {{for r in requests:}}
+            <section class="pedido pull-left">
+            <strong><a href="#">{{=r.company_id.name}}</a></strong>
+            <figure><img src="{{if r.created_by.avatar:}} {{=URL('download', args=r.created_by.avatar)}} {{else:}} {{=URL('static','images/perfil-cat.png')}} {{pass}}" alt="Thubmail-pessoa"></figure>
+                <strong>{{=r.created_by.first_name}}</strong>
+                <span>
+                    {{=T("want to be associated as an investor in your company")}}
+                </span>
+                <br>
+                <div class="pull-left interacao">
+                    <input type="button" id="requestAccept" data-rid="{{=r.id}}" data-company="{{=r.company_id.id}}" data-user="{{=r.created_by.id}}" class="btn-success form-btn btn-interacao btn pull-left" value="{{=T('Accept')}}" onclick="aceitar()">
+                    <input type="button" id="requestDecline" data-rid="{{=r.id}}" data-company="{{=r.company_id.id}}" data-user="{{=r.created_by.id}}" class="btn-success form-btn btn-interacao recusa btn pull-left" value="{{=T('Decline')}}" onclick="recusar()">
+                </div>
+            </section>
+        {{pass}}
+    <!-- Esse espaço é onde fica a notificação, que pode ser repetido  -->
+</aside>
+<script type="text/javascript">
+
+
+var botoesEditar = document.querySelectorAll('[data-post]');
+
+for (var i = 0; i < botoesEditar.length; i++) {
+    botoesEditar[i].addEventListener('click',function(){
+        ajaxEditResposta(this);
+    });
+};
+
+function ajaxEditResposta(e){
+
+var idRespota = e.getAttribute('data-post');
+
+$.ajax({
+    type: 'POST',
+    url: url.reply_edit+'/'+idRespota,
+    success: function(data) {
+        var json = $.parseJSON(data)
+        document.getElementById('contentReply').value = json.rp_content;
+        document.getElementById('idPostReply').value = idRespota;
+    },
+    error: function(data){
+      console.log(data);
+    }
+  });
+
+}
+
+
+
+
+var aceitar = function(){
+    var request_id = document.getElementById("requestAccept").getAttribute("data-rid");
+    var company = document.getElementById("requestAccept").getAttribute("data-company");
+    var user = document.getElementById("requestAccept").getAttribute("data-user");
+    
+    $.ajax({
+        type: 'POST',
+        url: url.add_user_to_company,
+        data: "id="+user+"&company="+company+"&role=investor"+"&rid="+request_id
+        }).done(function (){
+            location.reload();
+        });
+}
+
+var recusar = function(){
+    console.log("Chamando a função recusar");
+    var request_id = document.getElementById("requestAccept").getAttribute("data-rid");
+    var company = document.getElementById("requestAccept").getAttribute("data-company");
+    var user = document.getElementById("requestAccept").getAttribute("data-user");
+   
+    console.log("request_id", request_id);
+    console.log("company", company);
+    console.log("user", user);
+    
+    $.ajax({
+        type: 'POST',
+        url: url.decline_request_to_invest,
+        data: "rid="+request_id,
+        success: function(){
+            location.reload();
+        },
+        error: function(){
+            console.log("Houve algum erro"); 
+        }});
+}
+</script>

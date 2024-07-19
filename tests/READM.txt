@@ -1,0 +1,17 @@
+Procedimentos para criação de testes.
+Para que os script de testes possam ser excutados e terem acesso a informações contidas no model da aplicação o script
+testRunner.py foi criado. Nesse script as classes de teste são carregadas na memória em tempo de execução.
+
+Assim o final de cada script de teste não pode conter o comando de execução do teste específico do mesmo
+ ( if(__nam__ == "__main__"):...).
+
+ O Nome do script de teste deve ser o mesmo que o nome da classe de teste contida no mesmo. Por exemplo
+ se for criado o text para o controller get_credentials, o script de teste deve se chamar test_get_credentials.py. Já
+ a classe de teste desse script deve se chamar Test_get_credential.
+
+ Os arquivos de teste devem ficar dentro da pasta tests na raiz da aplicação.
+
+ Para executar os teste digite o comando, a partir da pasta em que se encontra o web2py.py:
+
+ python web2py.py -S relatto -M -R ./application/relatto/testRunner.py
+

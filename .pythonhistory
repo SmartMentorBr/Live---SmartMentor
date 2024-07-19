@@ -1,0 +1,10 @@
+ls
+print company
+db.tables
+db.company
+db.company.id
+id = db(db.company.id > 0).select()
+print id
+for i in id:
+   print i
+exit()

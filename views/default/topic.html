@@ -1,0 +1,213 @@
+{{extend 'layout.html'}}
+{{if request.args(0) == 'edit':}}
+{{=form}}
+{{else:}}
+<div>
+
+	<!-- Modal editar comentário -->
+	
+	<div id="edit-comment" class="reveal-modal edit-post">
+        <div>
+            <span class="pull-right">
+                <a href="" onclick="document.getElementsByClassName('reveal-modal-bg')[0].click();">X</a>
+            </span>
+            <h1 class="green bold">{{=T('Editing reply')}}</h1>
+            <br>
+        </div>
+        <div class="cont-edit-company">
+            {{=form_reply.custom.begin}}
+                {{form_reply.custom.widget.rp_content["_class"] = "edit-post-comentario pull-left"}}
+                {{form_reply.custom.widget.rp_content["_id"] = "contentReply"}}
+                {{=form_reply.custom.widget.rp_content}}
+                {{form_reply.elements('#reply_topic')[0]["_type"]="hidden"}}
+                {{=form_reply.custom.widget.topic}}
+
+                <input type="hidden" name="reply_id" value="" id="idPostReply">
+                <input type="submit" id="reply_save_btn" class="btn-success form-btn btn btn-comentar pull-left" value='{{=T("Save Comment")}}'/>
+                <input type="button" class="btn-success form-btn btn btn-comentar recusa pull-left" value="{{=T('Cancel')}}" onclick="document.getElementsByClassName('reveal-modal-bg')[0].click();">
+            {{=form_reply.custom.end}}
+        </div>
+	</div>
+
+
+
+	<article class="post-feed">
+		<section class="miniatura">
+			<figure>
+
+			{{if session.linkedin:}}
+                <img src="
+                {{if topic.created_by.avatar_linkedin:}}
+                    {{=topic.created_by.avatar_linkedin}}
+                {{pass}}"
+                    alt="{{=topic.created_by.first_name}}">
+            {{else:}}
+                <img src="
+                {{if topic.created_by.avatar:}}
+                    {{=URL('download', args=topic.created_by.avatar)}}
+                {{else:}}
+                    {{=URL('static','images/imagemdefault.png')}}
+                {{pass}}" 
+                    alt="{{=topic.created_by.first_name}}">
+            {{pass}}
+				
+			</figure>
+		</section>
+		<section class="conteudo pull-left">
+
+			<!--Espaço da Publicacao Principal ! -->
+			<article class="postagem">
+				<!-- Titulo e Editar -->
+				<header class="pull-left">
+					<span class="pull-left nick">
+						<h3 class="azul">
+							{{=topic.title}}
+						</h3>
+						por: <span class="azul">{{=user.first_name}}</span>
+					</span>
+					<span class="pull-right opcoes">
+						{{if topic.created_by == auth.user.id or owner.id == auth.user.id:}}
+							<a href="{{=URL('company', vars=dict(company=company.id,edit=topic.id))}}">{{=T('Edit')}}</a> | <a href="{{=URL('topic', args=['delete',topic.id])}}">x</a>
+						{{pass}}
+					</span>
+				</header>
+
+				<!-- Conteudo da Postagem -->
+				<section class="pull-left" data-texto>
+					{{=topic.tp_content}}
+				</section>
+				<!-- Espaço para categoria, data, e link da postagem -->
+				<footer class="pull-left">
+					<span>
+						<strong>
+							{{=T('Posted on')}}:
+						</strong>
+					</span>
+					<span class="data">
+						{{=topic.created_on.strftime('%d de %B de %Y |  %H:%M') }}
+					</span>
+
+					<span>
+						<strong>
+							{{=T('Modified on')}}:
+						</strong>
+					</span>
+					<span class="data">
+						{{=prettydate(topic.modified_on)}}
+					</span>
+
+					<span>
+						(<a href="{{=URL('topic', args=topic.id)}}">{{=T('Post link')}}</a>)
+					</span>
+					<p>
+						{{if topic.tags != None:}}
+							<span>
+								<stron>{{=T('Categories')}}:</strong>
+								{{for tag in topic.tags:}}
+									<a href="{{=URL('company', vars=dict(company=company.id,tag=tag.tag))}}">{{=tag.tag}}</a>
+								{{pass}}
+							</span>
+						{{else:}}
+							<span>
+								<strong>{{=T('Whitout category')}}</strong>
+							</span>
+						{{pass}}
+					</p>
+				</footer>
+			</article>
+			<!--Espaço da Publicacao Principal ! -->
+
+
+			<!-- Espaço dos comentário -->
+
+			{{for reply in replies:}}
+			<section class="comentario pull-left" data-comment="{{=reply.id}}">
+				<section class="miniatura">
+						<figure>
+                            {{if session.linkedin:}}
+                                <img src="
+                                {{if reply.created_by.avatar_linkedin:}}
+                                    {{=reply.created_by.avatar_linkedin}}
+                                {{pass}}"
+                                    alt="{{=reply.created_by.first_name}}">
+                            {{else:}}
+                                <img src="
+                                {{if reply.created_by.avatar:}}
+                                    {{=URL('download', args=reply.created_by.avatar)}}
+                                {{else:}}
+                                    {{=URL('static','images/imagemdefault.png')}}
+                                {{pass}}" 
+                                    alt="{{=reply.created_by.first_name}}">
+                            {{pass}}
+                        </figure>
+					<!-- <figure>
+						<img src="{{if reply.created_by.avatar:}} {{=URL('download', args=reply.created_by.avatar)}} {{else:}} {{=URL('static','images/imagemdefault.png')}}{{pass}}" alt="{{=T('Thumbnail User')}}">
+					</figure> -->
+				</section>
+				<section class="conteudo pull-left">
+					<!-- comentario ! -->
+					<article class="postagem">
+
+						<!-- nome do usuario -->
+						<header class="pull-left">
+							<span class="pull-left nick">
+								<strong>
+									{{=reply.created_by.first_name}} {{=reply.created_by.last_name}}
+								</strong>
+							</span>
+							<span class="pull-right opcoes">
+								{{if reply.created_by.id == auth.user.id or owner.id == auth.user.id:}}
+									<a href="#" data-reveal-id="edit-comment" data-post="{{=reply.id}}">{{=T('Edit')}}</a> | <a href="{{=URL('delete_reply', vars=dict(id = reply.id, company = company.id)) }}">x</a>
+								{{pass}}
+							</span>
+						</header>
+						<!-- Postagem -->
+						<section class="pull-left">
+							<p data-texto>{{=reply.rp_content}}</p>
+						</section>
+						<!-- Espaço para data -->
+						<footer class="pull-left">
+
+							<span class="data">
+								{{=prettydate(reply.created_on)}}
+							</span>
+
+						</footer>
+					</article>
+
+					<!-- Inicio da postagem do comentário -->
+				</section>
+			</section>
+			{{pass}}
+			<!-- Espaço dos comentário -->
+
+			<!-- Espaço para postar comentário -->
+			{{=form_reply.custom.begin}}
+			<section class="comentario pull-left">
+				<a href="#" id="reply_rp_content_anchor_{{=str(topic.id)}}"></a>
+				<section class="miniatura">
+					<figure>
+						<img src="{{=get_avatar()}}" alt="Thubmail do Usuário">
+					</figure>
+				</section>
+				<section class="conteudo pull-left">
+					{{form_reply.custom.widget.rp_content["_class"] = "post-comentario"}}
+					{{form_reply.custom.widget.rp_content["_placeholder"] = T("Write a comment")}}
+					{{form_reply.custom.widget.rp_content["_id"] = "reply_rp_content_"+str(topic.id) }}
+					{{=form_reply.custom.widget.rp_content}}
+
+					{{form_reply.elements('#reply_topic')[0]["_type"]="hidden"}}
+					{{form_reply.elements('#reply_topic')[0]["_value"]=topic.id}}
+					{{=form_reply.custom.widget.topic}}
+
+					<input type="hidden" name="reply_id" value="" id="reply_to_edit_id_{{=topic.id}}"></input>
+					<input type="hidden" name="edit_reply" value="False" id="edit_reply_{{=topic.id}}"></input>
+					<input type="submit" id="reply_save_btn" class="btn-success form-btn btn btn-comentar pull-right" value='{{=T("Post Comment")}}'/></input>
+					<a href href="{{#=URL('company',vars=dict(company=company.id))}}" type="button" class="btn-success form-btn btn btn-cancelar pull-right">{{=T('Cancel')}}</a>
+				</section>
+			</section>
+			{{=form_reply.custom.end}}
+			<!-- Espaço para postar comentário -->
+		</section>
+	</article>
+{{pass}}

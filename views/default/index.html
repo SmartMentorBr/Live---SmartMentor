@@ -1,0 +1,68 @@
+{{extend 'layout.html'}}
+<div class="container home">
+    <img src="{{=URL('static','images/home-apresenta.png')}}" class="img-grande"></img>
+     <h4 class="home-desc">{{=T('Make efficient exchange of relevant information between the stakeholders of your business or your investments. Only in one place.')}} </h4>
+    <p class="ico-heigth icon-file"><span>{{=T('Inform relevant reports (finance, contracts, etc).')}}</span></p>
+    <p class="ico-heigth icon-busy"><span>{{=T('No more getting lost in emails or phone calls.')}}</span></p>
+    <p class="ico-heigth icon-thumbs-up"><span>{{=T('Easy, fast and transparent.')}}</span></p>
+    <p class="developerby">{{=T('Developed By')}}
+    <a href="http://koletivo.kolaborativa.com" target="_blank">
+    <img src="{{=URL('static','images/koletivo.png')}}" alt=""> Koletivo
+    </a>
+      </p>
+</div>
+<div class="container cad-home">
+    <h1 class="subheader">{{=T('Register')}}</h1>
+    
+    {{=form_register.custom.begin}}
+        {{form_register.custom.widget.first_name["_class"]="form-text full-width input-form-shadow"}}
+        {{form_register.custom.widget.first_name['_placeholder']=T("Username")}}
+        {{=form_register.custom.widget.first_name}}
+
+        {{form_register.custom.widget.email["_class"]="form-text full-width input-form-shadow"}}
+        {{form_register.custom.widget.email['_placeholder']=T("E-mail")}}
+        {{=form_register.custom.widget.email}}
+
+        {{form_register.elements('#auth_user_password')[0]["_class"]="form-text pass-input half-width-input-home input-form-shadow"}}
+        {{form_register.elements('#auth_user_password')[0]["_placeholder"]=T("Password")}}
+        {{=form_register.custom.widget.password}}
+
+        {{form_register.elements(_name="password_two")[0]["_class"]="form-text pass-input half-width-input-home input-form-shadow"}}
+        {{form_register.elements(_name="password_two")[0]["_placeholder"]=T("Confirm password")}}
+        {{=form_register.custom.widget.password_two}}
+        
+        <button type="submit" class="form-btn btn-success full-width form-btn-profile">{{=T('Confirm')}}</button>
+
+    {{=form_register.custom.end}}
+
+    <h1 class="subheader login-titulo">{{=T('Entrar com Linkedin')}}</h1>
+     <a href="{{=url_linkedin}}">
+        <div class='linkedin'></div>
+    </a>
+
+
+    <h1 class="subheader login-titulo">{{=T('Already have an account?')}}</h1>
+    {{=form_login.custom.begin}}
+        {{form_login.elements('#auth_user_email')[0]["_class"]="form-text full-width input-form-shadow"}}
+        {{form_login.elements('#auth_user_email')[0]["_placeholder"]=T("E-mail")}}
+        {{=form_login.custom.widget.email}}
+
+        {{form_login.elements('#auth_user_password')[0]["_class"]="form-text full-width input-form-shadow"}}
+        {{form_login.elements('#auth_user_password')[0]["_placeholder"]=T("Password")}}
+        {{=form_login.custom.widget.password}}
+        
+        <button type="submit" class="form-btn btn-action full-width">{{=T('Enter')}}</button>
+    {{=form_login.custom.end}}
+        <a href="{{=URL('default', 'user', args='request_reset_password')}}">{{=T('Forgot your password?')}}</a>
+
+</div>
+<!-- Code for timezone detection -->
+{{if timezone_e_desconhecida:}}
+<script>
+  $(function() {
+    var tz_name = jstz.determine();
+    $.get("{{=URL('default', 'define_timezone')}}", tz_name);
+  });
+</script>
+{{pass}}
+

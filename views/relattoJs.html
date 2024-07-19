@@ -1,0 +1,105 @@
+<!-- JS Globais -->
+<script>
+    //global variables
+//used in the plugin 'upload' => jquery.awesome-cropper
+var url = {
+     "ajax_upload"               : "{{=URL(c='default', f='ajax_upload')}}"
+    ,"ajax_get_avatar"           : "{{=URL(c='default', f='get_avatar')}}"
+    ,"ajax_get_company_avatar"   : "{{=URL(c='default', f='get_company_avatar')}}"
+    ,"folder_avatar"             : "{{=URL(c='default', f='download')}}"
+    ,"add_user_to_company"       : "{{=URL(c='default', f='add_user_to_company')}}"
+    ,"delete_user_of_company"    : "{{=URL(c='default',f='delete_user_of_company')}}"
+    ,"add_category_new"          : "{{=URL(c='default',f='create_category')}}"
+    ,"get_category"              : "{{=URL(c='default',f='get_category')}}"
+    ,"get_topic_category"        : "{{=URL(c='default',f='get_topic_category')}}"
+    ,"reply_to_edit"             : "{{=URL(c='default',f='reply_to_edit')}}"
+    ,"decline_request_to_invest" : "{{=URL(c='default',f='decline_request_to_invest')}}"
+    ,'testa_ajax'                : "{{=URL(c='default',f='testaAjax')}}"
+    ,'reply_edit'                : "{{=URL(c='default',f='reply/edit')}}"
+};
+var text = {
+         "button_upload_apply" : "{{=T('Apply')}}"
+        ,"button_upload_cancel": "{{=T('Cancel')}}"
+,'alert': {
+         'link'          :'{{=T("Put the site in a valid format Example: www.relatto.com")}}'
+        ,'companyName'   :'{{=T("Fill in your company name")}}'
+        ,'categoryEmpty' :"{{=T('Fill out before adding a new category')}}"
+        ,'selectCategory':'{{=T("select or create a new category that identifies this post")}}'
+    }
+};
+var images = {
+    "notification"        : "{{=URL('static','images/notification.png' )}}",
+    "notificationDesable" : "{{=URL('static','images/notification-desable.png' )}}"
+}
+</script>
+<script src="{{=URL('static', 'js/plugin_timezone/jstz.min.js')}}"></script>
+
+<script src="{{=URL('static','js/relatto/modules.js')}}"></script>
+ 
+<!-- JS -->
+<script src="{{=URL('static', 'js/jquery.min.js')}}"></script>
+<script src="{{=URL('static', 'js/bootstrap.js')}}"></script>
+
+<!-- Plugin Crop -->
+<script src="{{=URL('static', 'js/jquery.imgareaselect.min.js')}}"></script>
+<script src="{{=URL('static', 'js/jquery.awesome-cropper.js')}}"></script>
+
+<!-- Modal  -->
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="{{=URL('static','js/jquery.reveal.js')}}"></script>
+
+<!-- JS Relatto -->
+<script src="{{=URL('static','js/relatto/index.js')}}"></script>
+<script src="{{=URL('static','js/relatto/notifications.js')}}"></script>
+
+
+
+
+{{if request.function == 'company' or request.function == 'topic':}}
+    <script src={{=URL('static','js/relatto/company.js')}}></script>
+{{pass}}
+
+{{if request.function == 'companies':}}
+    <script src={{=URL('static','js/relatto/companies.js')}}></script>
+{{pass}}
+
+{{if request.function == 'reports':}}
+    <script src={{=URL('static','js/chartjs.js')}}></script>
+    <script src={{=URL('static','js/relatto/graficos.js')}}></script>
+    
+    <script src="{{=URL('static/js','bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{=URL('static/js','bootstrap-datepicker.pt-BR.min.js')}}"></script>
+    
+    <link rel="stylesheet" href="{{=URL('static/css','bootstrap-datepicker.standalone.min.css')}}">
+
+
+    <script type="text/javascript">
+
+      $('.date').datepicker({
+        format:'dd/mm/yyyy',
+        language:'pt-BR',
+        autoclose:true,
+        todayHighlight:true,
+      });
+
+    </script>
+    
+{{pass}}
+
+
+<script> 
+//resposta = '{{=response.flash or session.flash or ''}}';
+//document.getElementById("responseFlash").innerHTML = resposta;
+
+$(document).ready(function () {
+    $('#avatar-upload').awesomeCropper(
+        { width: 150, height: 150, debug: true }
+    );
+});
+$('.avatar').on('click', function(){
+    $(this).parent().find('.input-file').click();
+})
+
+
+
+</script>

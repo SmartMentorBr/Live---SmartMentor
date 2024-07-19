@@ -1,0 +1,318 @@
+<!doctype html>
+<html class="{{if request.function == "index":}}cinza{{pass}}">
+    <head>
+        <title>{{=response.title or request.application}}</title>
+        <meta charset="utf-8" />
+
+        <meta name="description" content="Torne eficiente a troca de informações relevantes entre os stakeholders do seu negócio ou de seus investimentos. Em um só lugar.">
+        <meta name="keywords" content="governance, startup, investors, accelerators, performance, relatto, report, governança, startup, investidores, aceleradoras, performance, relatto, relatório,plataforma de investimento">
+
+    <link href="{{=URL('static', 'css/imgareaselect/imgareaselect-default.css')}}" rel="stylesheet" media="screen">
+    <link href="{{=URL('static', 'css/jquery.awesome-cropper.css')}}" rel="stylesheet" media="screen">
+    <link href="{{=URL('static', 'css/bootstrap.min.css')}}" rel="stylesheet" media="screen">
+
+
+    <link rel="icon"  type="image/png"  href="{{=URL('static','images/favicon.png')}}">
+    <link rel="apple-touch-icon" href="{{=URL('static','images/favicon.png')}}">
+
+
+    <link rel="stylesheet" href="{{=URL('static','css/style.css')}}" />
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic,300,300italic' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="{{=URL('static', 'css/style-icons.css')}}">
+    <link rel="stylesheet" href="{{=URL('static', 'css/reveal.css')}}">
+
+
+    <link rel="stylesheet" href="{{=URL('static','css/style.css')}}" />
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic,300,300italic' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="{{=URL('static', 'css/style-icons.css')}}">
+    <link rel="stylesheet" href="{{=URL('static', 'css/reveal.css')}}">
+
+    <!--Adicionado por Jorge Rafael -->
+    <link rel="stylesheet" href="{{=URL('static', 'css/estilo-frontend.css')}}">
+    <!--Adicionado por Jorge Rafael -->
+
+    {{include 'web2py_ajax.html'}}
+
+    <script type="text/javascript">
+                //global variables
+                //used in the plugin 'upload' => jquery.awesome-cropper
+                url = {
+                   "ajax_upload"               : "{{=URL(c='default', f='ajax_upload')}}"
+                   ,"ajax_get_avatar"           : "{{=URL(c='default', f='get_avatar')}}"
+                   ,"ajax_get_company_avatar"   : "{{=URL(c='default', f='get_company_avatar')}}"
+                   ,"folder_avatar"             : "{{=URL(c='default', f='download')}}"
+                   ,"add_user_to_company"       : "{{=URL(c='default', f='add_user_to_company')}}"
+                   ,"delete_user_of_company"    : "{{=URL(c='default',f='delete_user_of_company')}}"
+                   ,"add_category_new"          : "{{=URL(c='default',f='create_category')}}"
+                   ,"get_category"              : "{{=URL(c='default',f='get_category')}}"
+                   ,"get_topic_category"        : "{{=URL(c='default',f='get_topic_category')}}"
+                   ,"reply_to_edit"             : "{{=URL(c='default',f='reply_to_edit')}}"
+                   ,"decline_request_to_invest" : "{{=URL(c='default',f='decline_request_to_invest')}}"
+                   ,'testa_ajax'                : "{{=URL(c='default',f='testaAjax')}}"
+                   ,'reply_edit'                : "{{=URL(c='default',f='reply/edit')}}"
+               };
+               var text = {
+                   "button_upload_apply": "{{=T('Apply')}}"
+                   ,"button_upload_cancel": "{{=T('Cancel')}}",
+                   'alert': {
+                       'link'          :'{{=T("Put the site in a valid format Example: www.relatto.com")}}'
+                       ,'companyName'   :'{{=T("Fill in your company name")}}'
+                       ,'categoryEmpty' :"{{=T('Fill out before adding a new category')}}"
+                       ,'selectCategory':'{{=T("select or create a new category that identifies this post")}}'
+                   }
+               };
+           </script>
+           <!--Script de configuração do heatmap-->
+           <script type="text/javascript">
+              (function() {
+                var hm = document.createElement('script'); hm.type ='text/javascript'; hm.async = true;
+                hm.src = ('++u-heatmap-it+log-js').replace(/[+]/g,'/').replace(/-/g,'.');
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(hm, s);
+              })();
+           </script>
+
+       </head>
+       <body class="{{if request.function == "index":}}cinza{{pass}}" >
+        <div class="header">
+            <div class="header-user-bar">
+                <div class="content-center">
+                    <a href="{{=URL('index')}}">
+                        {{if request.function == "index":}}
+                        <!-- Logo da parte do rellato retirada provisóriamente -->
+                        <img src="{{=URL('static','images/LogoRellato.png')}}" class="logo logo-grande" alt="Relatto" title="Relatto">
+                        {{pass}}
+                        {{if request.function != "index":}}
+                        <!-- Logo da parte do rellato retirada provisóriamente -->
+                        <img src="{{=URL('static','images/relatto-logo.png')}}" class="logo" alt="Relatto" title="Relatto">
+                        {{pass}}
+                    </a>
+                    {{ if request.function in pages_with_search_enabled: }}
+                    {{search.custom.begin = XML("<form enctype=%(_enctype)s name=%(_name)s  action=%(_action)s method=%(_method)s>" % search.attributes)}}
+                    {{=search.custom.begin}}
+                    {{=search.custom.widget.search}}
+                    {{=search.custom.submit}}
+                    {{=search.custom.end}}
+                    {{ pass }}
+                    {{ if auth.user: }}
+                    <div class="info-user">
+                        <img id="avatar-logged" class="avatar" src={{=get_avatar()}}>
+                        <p>{{=auth.user.first_name+' '+auth.user.last_name}}</p>
+                        <p>
+                            <a href="{{=URL(c='default', f='user', args=['logout'], vars={'_next': URL(c='default', f='index')} )}}">
+                                <span class="icon-power-cord icon-logout"></span>
+                                {{=T('Logout')}}
+                            </a>
+                        </p>
+                    </div> <!-- .info-user -->
+                    {{ pass }}
+                </div>
+            </div> <!-- .header-user-bar -->
+            {{ if not request.function in pages_with_menu_and_breadcrumb_disabled: }}
+            {{ if request.args and request.args[0] in args_of_pages_with_breadcrumb_disabled: }}
+            {{''}}
+            {{ else: }}
+            {{if not 'navbar_disable' in globals():}} <!--Tive que adicionar esse if para esconder a navbar na página em_construcao -->
+            <nav class="menu-nav">
+                <ul>
+                    <a href="{{=URL('recent_activity')}}" class='{{=g_current_page("default/recent_activity","current-page")}}'>
+                        <li>
+                            <span class="icon-bell icon-menu-nav"></span>
+                            {{=T("Activity")}}
+                        </li>
+                    </a>
+                    <a href="{{=URL('companies')}}" class='{{=g_current_page("default/companies","current-page")}}'>
+                        <li>
+                            <span class="icon-briefcase icon-menu-nav"></span>
+                            {{=T("Companies")}}
+                        </li>
+                    </a>
+                    <a href="{{=URL('investments')}}" class='{{=g_current_page("default/investments","current-page")}}'>
+                        <li>
+                            <span class="icon-bars icon-menu-nav"></span>
+                            {{=T("Investments")}}
+
+                        </li>
+                    </a>
+
+                      <a href="{{=URL('reports')}}" class='{{=g_current_page("default/reports","current-page")}}'>
+                          <li>
+                              <span class="icon-bars icon-menu-nav"></span>
+                              {{=T("Reports")}}
+
+                          </li>
+                      </a>
+
+                      <a href="{{=URL('get_driver_service')}}"
+                         class="'{{=g_current_page('default/get_driver_service', 'current-page')}}">
+                          <li>
+                              <span class="icon-file icon-menu-nav"></span>
+                              {{=T("Drive")}}
+                          </li>
+
+                      </a>
+
+
+                    <a href="{{=URL(c='default', f='user', args=['profile'])}}" class='{{=g_current_page("default/user/profile","current-page")}}'>
+                        <li>
+                            <span class="icon-cog icon-menu-nav"></span>
+                            {{=T("Settings")}}
+                        </li>
+                    </a>
+
+                    <li>
+                        <span id="responseFlash"></span>
+                    </li>
+
+                </ul>
+
+                <div class="clear"></div>
+            </nav>
+            {{pass}}
+            {{ pass }}
+            {{ pass }}
+        </div>
+        {{#include 'breadcrumb.html'}}
+        {{if request.function == 'reports':}}
+            <div class="full">
+        {{else:}}
+            <div class="main content-center">
+        {{pass}}
+
+            {{include}}
+        </div>
+        <div class="clear"></div>
+        {{#include 'breadcrumb.html'}}
+        <div id="scrollToTop">&#8593;</div>
+
+
+ <div class="btn-share">
+            <a data-toggle="modal" data-target="#share-modal" href="#">
+                <img src="{{=URL('static','images/share.png')}}" width="15" style="vertical-align: bottom;" alt="">
+                {{=T('Share')}}
+            </a>
+        </div>
+
+        <div class="modal fade fade-share" id="share-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">s
+          <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="green bold">{{=T('Like it? share it')}}</h1>
+            </div>
+              <div class="modal-body share">
+
+                    <div class="">
+
+                     <a href="#" onclick="window.open('https://plus.google.com/share?url=http://www.relatto.com&text=Torne mais simples a comunicação entre os stakeholders da empresa acesse agora e confira!','gplusshare','width=450,height=300,left='+(screen.availWidth/2-225)+',top='+(screen.availHeight/2-150)+'');return false;" title="Compartilhar no Google Plus">
+                         <img class="" src="{{=URL('static','images/googlePlus.jpg')}}" title="Compartilhar no Google Plus" alt="Compartilhar no Google Plus" width="50px" height="50px">
+                     </a>
+                     <a href="#" onclick="window.open('http://twitter.com/intent/tweet?text=Torne mais simples a comunicação entre os stakeholders da empresa acesse agora e confira!&url=http://www.relatto.com','twittershare','width=450,height=300,left='+(screen.availWidth/2-225)+',top='+(screen.availHeight/2-150)+'');return false;"title="Compartilhar no Twitter">
+                         <img class="" src="{{=URL('static','images/twitter.jpg')}}" title="Compartilhar no Twitter" alt="Compartilhar no Twitter" width="50px" height="50px">
+                     </a>
+                     <a href="#" onclick="window.open('http://facebook.com/share.php?u=http://www.relatto.com&amp;t=Torne mais simples a comunicação entre os stakeholders da empresa acesse agora e confira!!','facebookshare','width=450,height=300,left='+(screen.availWidth/2-225)+',top='+(screen.availHeight/2-150)+'');return false;" title="Compartilhar no Facebook">
+                        <img class="" src="{{=URL('static','images/facebook.jpg')}}" title="Compartilhar no Facebook" alt="Compartilhar no Facebook" width="50px" height="50px">
+                    </a>
+                    <a href="#" onclick="window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url=http://www.relatto.com&amp;title=Relatto&amp;summary=Torne mais simples a comunicação entre os stakeholders da empresa acesse agora e confira!','twittershare','width=850,height=400,left='+(screen.availWidth/2-225)+',top='+(screen.availHeight/2-150)+'');return false;" title="Compartilhar no Linkedin">
+
+                        <img class="" src="{{=URL('static','images/linkedin.jpg')}}" title="Compartilhar no Linkedin" alt="Compartilhar no Linkedin" width="50px" height="50px">
+                    </a>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="form-btn form btn-sucess recusa form-btn-profile" data-dismiss="modal">{{=T('Close')}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+<style>
+    .modal .btn{width: auto;}
+    .modal .share img{display: inline; width: 50px; height: 50px;margin: 20px;}
+    .btn-share{
+        color: white;
+        position: fixed;
+        bottom: 0;
+        right: 250px;
+        border-bottom: none;
+        -moz-border-radius: 4px 4px 0 0;
+        -webkit-border-radius: 4px 4px 0 0;
+        border-radius: 4px 4px 0 0;
+        -moz-box-shadow: inset rgba(255,255,255,.25) 1px 1px 1px, rgba(0,0,0,.5) 0 1px 2px;
+        -webkit-box-shadow: inset rgba(255,255,255,.25) 1px 1px 1px, rgba(0,0,0,.5) 0 1px 2px;
+        box-shadow: inset rgba(255,255,255,.25) 1px 1px 1px, rgba(0,0,0,.5) 0 1px 2px;
+        font: normal normal bold 14px/1em Arial, sans-serif;
+        z-index: 9999;
+        background-color: #667820;
+    }
+    .btn-share a{
+        background-color: transparent;
+        display: block;
+        padding: 11px 10px 7px 13px;
+        text-decoration: none;
+        color: white;
+        font-weight: initial;
+        font-size: 15px;
+
+    }
+    .fade-share{top:-50% !important;}
+    .modal.fade.in {top: 10% !important}
+</style>
+        <!-- JS -->
+        <script src="{{=URL('static', 'js/jquery.min.js')}}"></script>
+        <script src="{{=URL('static', 'js/bootstrap.js')}}"></script>
+        <script src="{{=URL('static', 'js/jquery.imgareaselect.min.js')}}"></script>
+        <script src="{{=URL('static', 'js/jquery.awesome-cropper.js')}}"></script>
+
+
+        <script>
+           resposta = '{{=response.flash or session.flash or ''}}';
+           document.getElementById("responseFlash").innerHTML = resposta;
+       </script>
+
+
+       <script>
+        $(document).ready(function () {
+            $('#avatar-upload').awesomeCropper(
+                { width: 150, height: 150, debug: true }
+                );
+            console.log($('#avatar-upload').awesomeCropper({ width: 150, height: 150, debug: true }));
+        });
+        $('.avatar').on('click', function(){
+            $(this).parent().find('.input-file').click();
+        })
+    </script>
+
+    {{include 'relattoJs.html'}}
+
+    <!-- UserVoice JavaScript SDK (only needed once on a page) -->
+    <script>
+        (function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/ybnGjk4y9bGwz7fVD5xVHw.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()
+    </script>
+
+    <!-- A tab to launch the Classic Widget -->
+    <script>
+        UserVoice = window.UserVoice || [];
+        UserVoice.push(['showTab', 'classic_widget', {
+          mode: 'full',
+          primary_color: '#667820',
+          link_color: '#005580',
+          default_mode: 'support',
+          forum_id: 261478,
+          tab_label: 'Feedback & Support',
+          tab_color: '#667820',
+          tab_position: 'bottom-right',
+          tab_inverted: false
+      }]);
+    </script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-53704586-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+
+</body>
+</html>
